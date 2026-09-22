@@ -125,7 +125,7 @@ public class Terrain {
         return tuile;
     }
 
-    public boolean estDansTerrain(int nCol, int nLigne) {
+    public boolean estDansTerrain(int nLigne, int nCol) {
         return nCol >= 0 && nCol < obtenirLargeur() && nLigne >= 0 && nLigne < obtenirHauteur();
     }
 
@@ -144,6 +144,10 @@ public class Terrain {
 
         int ligne = nouveauY / TAILLE_TUILLE;
         int colonne = nouveauX / TAILLE_TUILLE;
+
+        if(!estDansTerrain(ligne,colonne)) {
+            return false;
+        }
         return (avoirCodeTuile(ligne,colonne) >= '0' && avoirCodeTuile(ligne,colonne) <= '9') || avoirCodeTuile(ligne,colonne) == 'b';
     }
 
@@ -174,7 +178,7 @@ public class Terrain {
         for (int[] direction : directions) {
             int nCol = t.getColonne() + direction[0];
             int nLigne = t.getLigne() + direction[1];
-            if (estDansTerrain(nCol, nLigne) && tuileEstAccessibleCoords(nCol * TAILLE_TUILLE, nLigne * TAILLE_TUILLE)) {
+            if (estDansTerrain(nLigne, nCol) && tuileEstAccessibleCoords(nCol * TAILLE_TUILLE, nLigne * TAILLE_TUILLE)) {
                 voisins.add(new Point(nCol, nLigne));
             }
         }
