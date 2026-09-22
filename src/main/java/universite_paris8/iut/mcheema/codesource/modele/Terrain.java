@@ -102,8 +102,8 @@ public class Terrain {
         return this.terrainDeJeu[0].length;
     }
 
-    public char avoirCodeTuile(int i, int j) {
-        return this.terrainDeJeu[i][j];
+    public char avoirCodeTuile(int ligne, int colonne) {
+        return this.terrainDeJeu[ligne][colonne];
     }
 
 
