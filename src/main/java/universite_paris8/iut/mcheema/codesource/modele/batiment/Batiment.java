@@ -51,10 +51,6 @@ public abstract class Batiment extends Entite {
         return this.niveau * this.prix / 4;
     }
 
-    public void vendreBatiment() {
-        this.getEnvironnement().getBatiments().remove(this);
-        this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() + this.avoirPrixVente());
-    }
 
     /**
      * Déplace le bâtiment vers une nouvelle position sur le terrain.
