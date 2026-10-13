@@ -191,7 +191,7 @@ public class Environnement {
     }
 
     public void acheterBatiment(Batiment batiment) {
-        if(this.getArgent() >= batiment.getPrix()) {
+        if(this.transactionEstPossible(batiment.getPrix())) {
             this.ajouterBatiment(batiment);
             this.setArgent(this.getArgent() - batiment.getPrix());
         }
@@ -200,6 +200,10 @@ public class Environnement {
     public void vendreBatiment(Batiment batiment) {
         this.getBatiments().remove(batiment);
         this.setArgent(this.getArgent() + batiment.avoirPrixVente());
+    }
+
+    public boolean transactionEstPossible(int coutTransaction) {
+        return this.getArgent() >= coutTransaction;
     }
 }
 
