@@ -27,21 +27,25 @@ public class Ralentisseur extends Ennemi {
     @Override
     public void effectueAction() {
         super.effectueAction();
-        for(Batiment batiment : this.getEnvironnement().getBatiments()) {
-            if(batiment instanceof BatimentTir) {
-                if (!batimentRalenti.contains(batiment)) {
-                    if (Math.sqrt((this.getX() - batiment.getX()) * (this.getX() - batiment.getX()) + (this.getY() - batiment.getY()) * (this.getY() - batiment.getY())) <= this.portee) {
-                        ((BatimentTir) batiment).setCadenceTir((int) (((BatimentTir) batiment).getCadenceTir() * this.ralentissement));
-                        this.batimentRalenti.add((BatimentTir) batiment);
-                    }
-                }
+        this.ralentirBatiment();
+        this.retablirBatiment();
+    }
+
+    public void ralentirBatiment() {
+        for (Batiment batiment : this.getEnvironnement().getBatiments()) {
+            if(batiment instanceof BatimentTir batimentTir && !batimentRalenti.contains(batiment)
+                    && this.calculDistance(batiment) <= this.portee) {
+                batimentTir.setCadenceTir((int) (batimentTir.getCadenceTir() * this.ralentissement));
+                this.batimentRalenti.add(batimentTir);
             }
         }
+    }
 
-        for(int i = this.batimentRalenti.size() - 1;i>=0;i--) {
-            BatimentTir batiment = this.batimentRalenti.get(i);
-            if (Math.sqrt((this.getX() - batiment.getX()) * (this.getX() - batiment.getX()) + (this.getY() - batiment.getY()) * (this.getY() - batiment.getY()))>this.portee) {
-                batiment.setCadenceTir((int) (batiment.getCadenceTir() / this.ralentissement));
+    public void retablirBatiment() {
+        for(int i = this.batimentRalenti.size() - 1; i >= 0; i--) {
+            BatimentTir batimentTir = this.batimentRalenti.get(i);
+            if (this.calculDistance(batimentTir) > this.portee) {
+                batimentTir.setCadenceTir((int) (batimentTir.getCadenceTir() / this.ralentissement));
                 this.batimentRalenti.remove(i);
             }
         }
