@@ -63,5 +63,16 @@ public abstract class Entite {
                 (this.getY() - ent.getY()) * (this.getY() - ent.getY())));
     }
 
+    /**
+     * Vérifie si la distance euclidienne entre deux entités est dans la portée
+     * @param ent l'entité avec laquelle on souhaite vérifier
+     * @param portee la portee qui doit etre verifier
+     * @return vrai si la portee est superieur ou egal a la distance euclidienne sinon faux
+     */
+    public boolean estDansLaPortee(Entite ent, int portee) {
+        double calculDistance = this.calculDistance(ent);
+        return calculDistance <= portee;
+    }
+
     public abstract void effectueAction();
 }
