@@ -1,10 +1,8 @@
 package universite_paris8.iut.mcheema.codesource.modele.ennemi;
 
-import universite_paris8.iut.mcheema.codesource.modele.Point;
-import universite_paris8.iut.mcheema.codesource.modele.Terrain;
+import universite_paris8.iut.mcheema.codesource.modele.*;
 import universite_paris8.iut.mcheema.codesource.modele.batiment.Batiment;
 import universite_paris8.iut.mcheema.codesource.modele.batiment.BatimentTir;
-import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 
 import java.util.ArrayList;
 
@@ -14,14 +12,15 @@ import java.util.ArrayList;
  * Il possède une portée d'attaque.
  */
 public class Ralentisseur extends Ennemi {
-    private int ralentissement;
+    private double ralentissement;
     private int portee;
-    private ArrayList<BatimentTir> batimentRalenti;
+    private ChangementCadenceTir changementCadence;
+
     public Ralentisseur(Environnement env, ArrayList<Point> chemin) {
         super(50, 1, 250, env, chemin);
         this.ralentissement = 3;
         this.portee = 2 * Terrain.TAILLE_TUILLE;
-        this.batimentRalenti = new ArrayList<>();
+        this.changementCadence = new ChangementCadenceTir();
     }
 
     @Override
@@ -29,20 +28,15 @@ public class Ralentisseur extends Ennemi {
         super.effectueAction();
         for(Batiment batiment : this.getEnvironnement().getBatiments()) {
             if(batiment instanceof BatimentTir) {
-                if (!batimentRalenti.contains(batiment)) {
-                    if (Math.sqrt((this.getX() - batiment.getX()) * (this.getX() - batiment.getX()) + (this.getY() - batiment.getY()) * (this.getY() - batiment.getY())) <= this.portee) {
-                        ((BatimentTir) batiment).setCadenceTir((int) (((BatimentTir) batiment).getCadenceTir() * this.ralentissement));
-                        this.batimentRalenti.add((BatimentTir) batiment);
+                    if (this.estDansLaPortee(batiment,this.portee)) {
+                        this.changementCadence.appliquerNouvelleCadence((BatimentTir)batiment,this.ralentissement);
                     }
-                }
             }
         }
-
-        for(int i = this.batimentRalenti.size() - 1;i>=0;i--) {
-            BatimentTir batiment = this.batimentRalenti.get(i);
-            if (Math.sqrt((this.getX() - batiment.getX()) * (this.getX() - batiment.getX()) + (this.getY() - batiment.getY()) * (this.getY() - batiment.getY()))>this.portee) {
-                batiment.setCadenceTir((int) (batiment.getCadenceTir() / this.ralentissement));
-                this.batimentRalenti.remove(i);
+        ArrayList<BatimentTir> listeBatimentCadenceModifier = new ArrayList<>(this.changementCadence.getCleCadancesAvantModification());
+        for (BatimentTir batimentTir : listeBatimentCadenceModifier) {
+            if (!this.estDansLaPortee(batimentTir,this.portee)) {
+                this.changementCadence.restaurerAncienneCadence(batimentTir,this.ralentissement);
             }
         }
     }
