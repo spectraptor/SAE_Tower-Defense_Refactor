@@ -40,7 +40,7 @@ public class ChangementCadenceTir {
     public boolean estModifiable(BatimentTir batimentTir,double multiplicateurCadence) {
         int prochaineCadence = this.calculerNouvelleCadence(batimentTir.getCadenceTir(),multiplicateurCadence);
         return !this.cadancesAvantModification.containsKey(batimentTir)
-                && BatimentTir.cadenceModifiable(prochaineCadence);
+                && BatimentTir.cadenceEstModifiable(prochaineCadence);
     }
 
     public int calculerNouvelleCadence(int ancienneCadence, double proportionNouvelleCadence) {

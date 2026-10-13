@@ -7,6 +7,8 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 import java.util.ArrayList;
 
 public abstract class BatimentTir extends BatimentAvecPortee{
+    public final static int MIN_CADENCE_LIMITE = 15;
+    public final static int MAX_CADENCE_LIMITE = 3000;
     private final int cadenceTirBase;
     private int cadenceTir;
     private int degat;
@@ -29,7 +31,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
             boolean ennemiTrouve = false;
             while (i < ennemis.size() && !ennemiTrouve) {
                 Ennemi ennemi = ennemis.get(i);
-                if (this.calculDistance(ennemi) <= this.getPortee() && this.peutAttaquer(ennemi)) {
+                if (this.estDansLaPortee(ennemi,this.getPortee()) && this.peutAttaquer(ennemi)) {
                     this.getEnvironnement().ajouterProjectile(this.choisirProjectile(ennemis.get(i)));
                     ennemiTrouve = true;
                 }
@@ -46,7 +48,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         this.degat = degat;
     }
 
-    public double getCadenceTir() {
+    public int getCadenceTir() {
         return this.cadenceTir;
     }
 
@@ -70,6 +72,10 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     }
 
     public abstract Projectile choisirProjectile(Ennemi cible);
+
+    public static boolean cadenceEstModifiable(int nouvelleCadence) {
+        return nouvelleCadence >= MIN_CADENCE_LIMITE && nouvelleCadence <= MAX_CADENCE_LIMITE;
+    }
 
     public String avoirDescription() {
         return  super.avoirDescription() + "\nCadence (s.) : " +  this.cadenceTir/60 +
