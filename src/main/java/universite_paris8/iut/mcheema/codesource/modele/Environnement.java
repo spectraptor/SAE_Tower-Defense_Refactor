@@ -160,7 +160,7 @@ public class Environnement {
                         batimentAPoser = new RAM(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
                         break;
                 }
-                batimentAPoser.acheterBatiment();
+                this.acheterBatiment(batimentAPoser);
             }
         }
     }
@@ -190,5 +190,11 @@ public class Environnement {
         this.argentProperty.setValue(getArgent() - argent);
     }
 
+    public void acheterBatiment(Batiment batiment) {
+        if(this.getArgent() >= batiment.getPrix()) {
+            this.ajouterBatiment(batiment);
+            this.setArgent(this.getArgent() - batiment.getPrix());
+        }
+    }
 }
 

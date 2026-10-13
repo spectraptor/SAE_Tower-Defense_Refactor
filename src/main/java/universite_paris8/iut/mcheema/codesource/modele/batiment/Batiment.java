@@ -56,14 +56,6 @@ public abstract class Batiment extends Entite {
         this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() + this.avoirPrixVente());
     }
 
-    public void acheterBatiment() {
-        if(this.getEnvironnement().getArgent() >= this.getPrix()) {
-            this.getEnvironnement().ajouterBatiment(this);
-            this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() - this.getPrix());
-        }
-    }
-
-
     /**
      * Déplace le bâtiment vers une nouvelle position sur le terrain.
      * Le déplacement est soumis à plusieurs conditions :
