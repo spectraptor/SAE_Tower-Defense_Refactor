@@ -56,10 +56,6 @@ public abstract class Ennemi extends Entite {
         return this.pvProperty;
     }
 
-    public int getVitesse() {
-        return this.vitesse;
-    }
-
     public boolean estVivant() {
         return this.getPv()>0;
     }
@@ -75,14 +71,6 @@ public abstract class Ennemi extends Entite {
             this.setX(depart.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
             this.setY(depart.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
         }
-    }
-
-    public int getIndiceChemin() {
-        return this.indiceChemin;
-    }
-
-    public void setIndiceChemin(int indice) {
-        this.indiceChemin = indice;
     }
 
     public int getArgentDonne() {
