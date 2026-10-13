@@ -196,5 +196,10 @@ public class Environnement {
             this.setArgent(this.getArgent() - batiment.getPrix());
         }
     }
+
+    public void vendreBatiment(Batiment batiment) {
+        this.getBatiments().remove(batiment);
+        this.setArgent(this.getArgent() + batiment.avoirPrixVente());
+    }
 }
 
