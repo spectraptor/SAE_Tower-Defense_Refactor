@@ -149,8 +149,7 @@ public abstract class Ennemi extends Entite {
      * @return vrai si c'est une instance d'une de ces 4 classes, faux sinon
      */
     public boolean estUnBoss() {
-        return (this instanceof GrosBogue || this instanceof ErreurDeLogique || this
-                instanceof ErreurDeSyntaxe || this instanceof ErreurExecution);
+        return false;
     }
 
     public String toString() {
