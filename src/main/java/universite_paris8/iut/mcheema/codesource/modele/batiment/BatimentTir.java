@@ -9,14 +9,12 @@ import java.util.ArrayList;
 public abstract class BatimentTir extends BatimentAvecPortee{
     public final static int MIN_CADENCE_LIMITE = 15;
     public final static int MAX_CADENCE_LIMITE = 3000;
-    private final int cadenceTirBase;
     private int cadenceTir;
     private int degat;
 
     public BatimentTir(String nom ,double x, double y, int portee, int degat, int prix, int cTir, Environnement env) {
         super(nom,x, y, portee, prix, 4, env);
         this.cadenceTir = cTir;
-        this.cadenceTirBase = cTir;
         this.degat = degat;
     }
 
@@ -59,10 +57,6 @@ public abstract class BatimentTir extends BatimentAvecPortee{
                 this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
             }
         }
-    }
-
-    public int getCadenceTirBase() {
-        return this.cadenceTirBase;
     }
 
     public abstract boolean peutAttaquer(Ennemi cible);
