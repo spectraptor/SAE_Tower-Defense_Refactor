@@ -53,13 +53,13 @@ public abstract class Batiment extends Entite {
 
     public void vendreBatiment( ) {
         this.getEnvironnement().getBatiments().remove(this);
-        this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() + this.avoirPrixVente());
+        this.getEnvironnement().ajouterArgent(this.avoirPrixVente());
     }
 
     public void acheterBatiment() {
         if(this.getEnvironnement().getArgent() >= this.getPrix()) {
             this.getEnvironnement().ajouterBatiment(this);
-            this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() - this.getPrix());
+            this.getEnvironnement().retirerArgent(this.getPrix());
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class Batiment extends Entite {
                 if(this.getEnvironnement().tuileTourPosable(nouvX,nouvY) && !this.getEnvironnement().tuileContientUnBatiment(tabLigneColCentreBat[1],tabLigneColCentreBat[0])) {
                     this.setX(tabLigneColCentreBat[1]);
                     this.setY(tabLigneColCentreBat[0]);
-                    this.getEnvironnement().setArgent((this.getEnvironnement().getArgent() - prixDepBatiment));
+                    this.getEnvironnement().retirerArgent(prixDepBatiment);
                 }
             }
         }

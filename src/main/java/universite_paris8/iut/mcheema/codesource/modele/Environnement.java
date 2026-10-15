@@ -183,11 +183,13 @@ public class Environnement {
     public final IntegerProperty argentProperty() { return this.argentProperty;}
 
     public void ajouterArgent(int argent) {
-        this.argentProperty.setValue(getArgent() + argent);
+        if (argent > 0)
+            this.argentProperty.setValue(getArgent() + argent);
     }
 
     public void retirerArgent(int argent) {
-        this.argentProperty.setValue(getArgent() - argent);
+        if (argent > 0)
+            this.argentProperty.setValue(getArgent() - argent);
     }
 
 }
