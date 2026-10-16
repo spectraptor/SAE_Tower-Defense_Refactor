@@ -1,6 +1,5 @@
 package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
-
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
@@ -29,7 +28,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
             boolean ennemiTrouve = false;
             while (i < ennemis.size() && !ennemiTrouve) {
                 Ennemi ennemi = ennemis.get(i);
-                if (this.estDansLaPortee(ennemi,this.getPortee()) && this.peutAttaquer(ennemi)) {
+                if (estDansLaPortee(this,ennemi,this.getPortee()) && this.peutAttaquer(ennemi)) {
                     this.getEnvironnement().ajouterProjectile(this.choisirProjectile(ennemis.get(i)));
                     ennemiTrouve = true;
                 }
@@ -72,7 +71,12 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     }
 
     public String avoirDescription() {
-        return  super.avoirDescription() + "\nCadence (s.) : " +  this.cadenceTir/60 +
+        return  super.avoirDescription() + "\nCadence (s.) : " +  this.cadenceTir +
                 "\nDegat : " + this.getDegat();
+    }
+
+    @Override
+    public boolean possedeCadenceTir() {
+        return true;
     }
 }

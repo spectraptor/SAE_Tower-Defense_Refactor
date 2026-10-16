@@ -113,5 +113,9 @@ public abstract class Batiment extends Entite {
         return   this.getNom() +  "      \n\n" + "Niveau actuel : " + this.getNiveau() + "/" + this.getNiveauMax() + "\n";
     }
 
+    public boolean possedeCadenceTir() {
+        return false;
+    }
+
 
 }
