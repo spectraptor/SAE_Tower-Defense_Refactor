@@ -1,5 +1,6 @@
 package universite_paris8.iut.mcheema.codesource.modele.ennemi;
 
+import javafx.collections.ObservableList;
 import universite_paris8.iut.mcheema.codesource.modele.*;
 import universite_paris8.iut.mcheema.codesource.modele.batiment.Batiment;
 import universite_paris8.iut.mcheema.codesource.modele.batiment.BatimentTir;
@@ -26,18 +27,7 @@ public class Ralentisseur extends Ennemi {
     @Override
     public void effectueAction() {
         super.effectueAction();
-        for(Batiment batiment : this.getEnvironnement().getBatiments()) {
-            if(batiment instanceof BatimentTir) {
-                    if (this.estDansLaPortee(batiment,this.portee)) {
-                        this.changementCadence.appliquerNouvelleCadence((BatimentTir)batiment,this.ralentissement);
-                    }
-            }
-        }
-        ArrayList<BatimentTir> listeBatimentCadenceModifier = new ArrayList<>(this.changementCadence.getCleCadancesAvantModification());
-        for (BatimentTir batimentTir : listeBatimentCadenceModifier) {
-            if (!this.estDansLaPortee(batimentTir,this.portee)) {
-                this.changementCadence.restaurerAncienneCadence(batimentTir,this.ralentissement);
-            }
-        }
+        ObservableList<Batiment> batiments = this.getEnvironnement().getBatiments();
+        this.changementCadence.actualiserCadencesDansPortee(batiments,this,this.portee,this.ralentissement);
     }
 }

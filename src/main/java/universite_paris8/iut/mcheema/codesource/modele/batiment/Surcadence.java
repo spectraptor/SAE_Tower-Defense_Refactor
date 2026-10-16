@@ -1,11 +1,10 @@
 
 package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
+import javafx.collections.ObservableList;
 import universite_paris8.iut.mcheema.codesource.modele.ChangementCadenceTir;
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.Terrain;
-
-import java.util.ArrayList;
 
 /**
  * La classe Surcadence est un type de bâtiment.
@@ -25,22 +24,9 @@ public class Surcadence extends BatimentAvecPortee{
 
     @Override
     public void effectueAction() {
-        for (Batiment batiment : this.getEnvironnement().getBatiments()) {
-            if(batiment instanceof BatimentTir) {
-                if (this.estDansLaPortee(batiment,this.getPortee())) {
-                    this.changementCadence.appliquerNouvelleCadence((BatimentTir)batiment,this.diviseCadence);
-                }
-            }
-        }
-        // boucle utilisée lorsqu'on retire les ennemis de la portée de la surcadence.
-        // on remet le bâtiment à sa portée de base
-        ArrayList<BatimentTir> listeBatimentCadenceModifier = this.changementCadence.getCleCadancesAvantModification();
-        for (BatimentTir batimentTir : listeBatimentCadenceModifier) {
-            if(!this.estDansLaPortee(batimentTir,this.getPortee())) {
-                this.changementCadence.restaurerAncienneCadence(batimentTir,this.diviseCadence);
-            }
-        }
-    }
+        ObservableList<Batiment> batiments = this.getEnvironnement().getBatiments();
+        this.changementCadence.actualiserCadencesDansPortee(batiments,this,this.getPortee(),this.diviseCadence);
+   }
 
     @Override
     public void ameliorerBatiment() {
