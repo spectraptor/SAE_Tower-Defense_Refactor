@@ -13,28 +13,24 @@ public class ChangementCadenceTir {
         this.cadancesAvantModification = new HashMap<>();
     }
 
+    public int calculerNouvelleCadence(int ancienneCadence, double proportionNouvelleCadence) {
+        return (int) (ancienneCadence * proportionNouvelleCadence);
+    }
+
+    public void appliquerNouvelleCadenceAuBatiment(BatimentTir batiment, double multiplicateurCadence) {
+        if (this.estModifiable(batiment,multiplicateurCadence)) {
+            this.cadancesAvantModification.put(batiment, batiment.getCadenceTir());
+            int nouvelleCadence = this.calculerNouvelleCadence(batiment.getCadenceTir(), multiplicateurCadence);
+            batiment.setCadenceTir(nouvelleCadence);
+        }
+    }
+
     public void appliquerNouvelleCadenceDansPortee(ObservableList<Batiment> batiments, Entite entite, int portee, double multiplicateurCadence) {
         for (Batiment batiment : batiments) {
             if (batiment.possedeCadenceTir()) {
                 if (Entite.estDansLaPortee(batiment,entite,portee)) {
                     this.appliquerNouvelleCadenceAuBatiment((BatimentTir) batiment,multiplicateurCadence);
                 }
-            }
-        }
-    }
-
-    public void appliquerNouvelleCadenceAuBatiment(BatimentTir batiment, double multiplicateurCadence) {
-        if (this.estModifiable(batiment,multiplicateurCadence)) {
-            this.cadancesAvantModification.put(batiment, batiment.getCadenceTir());
-            int nouvelleCadence = calculerNouvelleCadence(batiment.getCadenceTir(), multiplicateurCadence);
-            batiment.setCadenceTir(nouvelleCadence);
-        }
-    }
-
-    public void restaurerCadenceHorsPortee(Entite entite,int portee,double multiplicateurCadence) {
-        for (BatimentTir batimentTir : this.cadancesAvantModification.keySet()) {
-            if (!Entite.estDansLaPortee(entite, batimentTir, portee)) {
-                this.restaurerAncienneCadenceAuBatiment(batimentTir, multiplicateurCadence);
             }
         }
     }
@@ -46,8 +42,12 @@ public class ChangementCadenceTir {
         }
     }
 
-    public int calculerNouvelleCadence(int ancienneCadence, double proportionNouvelleCadence) {
-        return (int) (ancienneCadence * proportionNouvelleCadence);
+    public void restaurerCadenceHorsPortee(Entite entite,int portee,double multiplicateurCadence) {
+        for (BatimentTir batimentTir : this.cadancesAvantModification.keySet()) {
+            if (!Entite.estDansLaPortee(entite, batimentTir, portee)) {
+                this.restaurerAncienneCadenceAuBatiment(batimentTir, multiplicateurCadence);
+            }
+        }
     }
 
     public boolean estModifiable(BatimentTir batimentTir,double multiplicateurCadence) {
