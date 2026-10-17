@@ -85,7 +85,7 @@ public abstract class Batiment extends Entite {
         double distanceNbTuile = calculerDistance(centreX, centreY);
         int prixDepBatiment = calculerNouveauPrix(distanceNbTuile);
 
-        if (peutConstruireBatiment(nouvX, nouvY)) {
+        if (this.peutConstruireBatiment(nouvX, nouvY)) {
             this.setX(centreX);
             this.setY(centreX);
             this.getEnvironnement().setArgent((this.getEnvironnement().getArgent() - prixDepBatiment));
@@ -116,21 +116,9 @@ public abstract class Batiment extends Entite {
         return (int) (this.getPrix() * Batiment.TAUX_REDUCTION_DEPLACEMENT * distanceTuile);
     }
 
-    /**
-     * Vérifie si on peut construire un bâtiment (càd, si la tuile est correcte, si elle n'a pas déjà un bâtiment et si la partie n'est pas dejà finie).
-     *
-     * @param x les coordonnés x où l'on veut placer le bâtiment.
-     * @param y les coordonnées y où l'on veut placer le bâtiment
-     *
-     * @return vrai si on peut poser le batiment, faux sinon.
-     *
-     */
     public boolean peutConstruireBatiment(int x, int y) {
-        int[] centreTuile = this.getEnvironnement().getTerrainDeJeu().mettreCoordsSurCentreTuile(x, y);
-        return !this.getEnvironnement().partieEstFinie() && this.getEnvironnement().tuileTourPosable(x, y) && !this.getEnvironnement().tuileContientUnBatiment(centreTuile[1], centreTuile[0]);
+        return this.getEnvironnement().peutConstruireBatiment(x, y);
     }
-
-
 
     public void incrementerNiveau() {
         this.setNiveau(this.getNiveau() + 1);

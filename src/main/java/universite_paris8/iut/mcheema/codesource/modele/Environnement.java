@@ -103,7 +103,6 @@ public class Environnement {
         }
     }
 
-
     public boolean tuileTourPosable(int x, int y) {
         return this.getTerrainDeJeu().tuileTourPosable(x , y);
     }
@@ -127,6 +126,20 @@ public class Environnement {
     }
 
     /**
+     * Vérifie si on peut construire un bâtiment (càd, si la tuile est correcte, si elle n'a pas déjà un bâtiment et si la partie n'est pas dejà finie).
+     *
+     * @param x les coordonnés x où l'on veut placer le bâtiment.
+     * @param y les coordonnées y où l'on veut placer le bâtiment
+     *
+     * @return vrai si on peut poser le batiment, faux sinon.
+     *
+     */
+    public boolean peutConstruireBatiment(int x, int y) {
+        int[] centreTuile = this.getTerrainDeJeu().mettreCoordsSurCentreTuile(x, y);
+        return !this.partieEstFinie() && this.tuileTourPosable(x, y) && !this.tuileContientUnBatiment(centreTuile[1], centreTuile[1]);
+    }
+
+    /**
      * Permet de poser un batiment au sein du jeu.
      * @param x l'abscisse du batiment
      * @param y l'ordonnée du batiment
@@ -137,9 +150,7 @@ public class Environnement {
         Batiment batimentAPoser = null;
         int[] tabLigneColonneBatCentre = this.terrainDeJeu.mettreCoordsSurCentreTuile(x, y);
 
-        if (!this.partieEstFinie()) {
-            if (this.tuileTourPosable(x, y) && !this.tuileContientUnBatiment(tabLigneColonneBatCentre[1],
-                    tabLigneColonneBatCentre[0])) {
+        if (this.peutConstruireBatiment(x, y)) {
                 switch (numBat) {
                     case 1:
                         batimentAPoser = new Compilateur(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
@@ -161,7 +172,6 @@ public class Environnement {
                         break;
                 }
                 batimentAPoser.acheterBatiment();
-            }
         }
     }
 
