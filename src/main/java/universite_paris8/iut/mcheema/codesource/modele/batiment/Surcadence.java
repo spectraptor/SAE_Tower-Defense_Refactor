@@ -17,7 +17,7 @@ public class Surcadence extends BatimentAvecPortee{
 
     public Surcadence(double x, double y, Environnement env) {
         super("Surcadence", x, y, Terrain.TAILLE_TUILLE,300, 2, env);
-        this.diviseCadence = 1/1.25;
+        this.diviseCadence = 0.8;
         this.changementCadence = new ChangementCadenceTir();
     }
 
@@ -32,10 +32,10 @@ public class Surcadence extends BatimentAvecPortee{
     public void ameliorerBatiment() {
         if(this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration()) {
             if (this.getNiveau() < this.getNiveauMax()) {
-                this.diviseCadence *= (1 + this.tauxAmeliorationParNiveau());
+                this.changementCadence.viderCadancesAvantModification(this.diviseCadence); // enlever la liste des bâtiments déjà présents pour pouvoir changer leur cadence
+                this.diviseCadence *= (1 - this.tauxAmeliorationParNiveau());
                 this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
                 this.incrementerNiveau();
-                this.changementCadence.viderCadancesAvantModification(); // enlever la liste des bâtiments déjà présents pour pouvoir changer leur cadence
             }
         }
     }
