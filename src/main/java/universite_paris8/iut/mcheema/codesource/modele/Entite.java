@@ -65,13 +65,12 @@ public abstract class Entite {
 
     /**
      * Vérifie si la distance euclidienne entre deux entités est inférieur ou égale à la portée
-     * @param ent1 la première entité
-     * @param ent2 la deuxième entité
+     * @param ent la deuxième entite avec laquelle on souhaite vérifier
      * @param portee la portee à vérifier
      * @return true si la distance entre les 2 entités est inférieur ou égale à la portée, false sinon
      */
-    public static boolean estDansLaPortee(Entite ent1,Entite ent2, int portee) {
-        double calculDistance = ent1.calculDistance(ent2);
+    public boolean estDansLaPortee(Entite ent, int portee) {
+        double calculDistance = this.calculDistance(ent);
         return calculDistance <= portee;
     }
 
