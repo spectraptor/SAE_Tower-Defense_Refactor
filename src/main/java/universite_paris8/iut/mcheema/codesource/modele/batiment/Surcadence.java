@@ -47,15 +47,9 @@ public class Surcadence extends BatimentAvecPortee{
     }
 
     @Override
-    public void ameliorerBatiment() {
-        if(this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration()) {
-            if (this.getNiveau() < this.getNiveauMax()) {
-                this.diviseCadence *= (1 + this.tauxAmeliorationParNiveau());
-                this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
-                this.incrementerNiveau();
-                this.batiments.clear(); // enlever la liste des bâtiments déjà présents pour pouvoir changer leur cadence
-            }
-        }
+    public void appliquerAmeliorations() {
+        this.diviseCadence *= (1 + this.tauxAmeliorationParNiveau());
+        this.batiments.clear(); // enlever la liste des bâtiments déjà présents pour pouvoir changer leur cadence
     }
 
     public String avoirDescription() {

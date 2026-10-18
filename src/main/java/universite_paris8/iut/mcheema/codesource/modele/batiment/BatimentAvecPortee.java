@@ -1,7 +1,6 @@
 package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 
 public abstract class BatimentAvecPortee extends Batiment {
     private int portee;
@@ -20,14 +19,8 @@ public abstract class BatimentAvecPortee extends Batiment {
                 "Portee : " + this.getPortee();
     }
 
-    public void ameliorerBatiment() {
-        if(this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration()) {
-            if (this.getNiveau() < this.getNiveauMax()) {
-                this.portee = (int)(this.portee * (1 + this.tauxAmeliorationParNiveau()));
-                this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
-                this.incrementerNiveau();
-            }
-        }
+    public void appliquerAmeliorations() {
+        this.portee = (int)(this.portee * (1 + this.tauxAmeliorationParNiveau()));
     }
 
 }

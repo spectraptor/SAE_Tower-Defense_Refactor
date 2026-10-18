@@ -35,10 +35,9 @@ public class BombeLogique extends BatimentTir {
     }
 
     @Override
-    public void ameliorerBatiment() {
-        super.ameliorerBatiment();
-        if(this.getNiveau() == this.getNiveauMax())
+    public void appliquerAmeliorations() {
+        super.appliquerAmeliorations();
+        if (this.getNiveau() + 1 == this.getNiveauMax()) // + 1 obligatoire car à ce stade la on n'a pas encore incrémenter le bâtiment.
             this.setDegat(this.getDegat() * 2);
     }
-
 }

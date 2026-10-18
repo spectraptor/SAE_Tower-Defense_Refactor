@@ -95,7 +95,14 @@ public abstract class Batiment extends Entite {
         this.setNiveau(this.getNiveau() + 1);
     }
 
-    public abstract void ameliorerBatiment();
+    public void ameliorerBatiment() {
+        if (this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration() && this.getNiveau() < this.getNiveauMax()) {
+            this.appliquerAmeliorations();
+            this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
+            this.incrementerNiveau();
+        }
+    }
+    public abstract void appliquerAmeliorations();
 
     public int coutProchaineAmelioration() {
         return (this.getNiveau()+1) *(this.getPrix() / 4);
