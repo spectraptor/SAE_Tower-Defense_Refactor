@@ -10,4 +10,9 @@ import java.util.ArrayList;
  */
 public class ErreurDeSyntaxe extends Ennemi {
     public ErreurDeSyntaxe(Environnement env, ArrayList<Point> chemin) {super(200,1 ,1000 , env, chemin);}
+
+    @Override
+    public boolean estUnBoss() {
+        return true;
+    }
 }
