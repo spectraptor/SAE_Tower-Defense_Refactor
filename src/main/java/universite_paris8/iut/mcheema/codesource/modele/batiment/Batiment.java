@@ -51,18 +51,6 @@ public abstract class Batiment extends Entite {
         return this.niveau * this.prix / 4;
     }
 
-    public void vendreBatiment( ) {
-        this.getEnvironnement().getBatiments().remove(this);
-        this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() + this.avoirPrixVente());
-    }
-
-    public void acheterBatiment() {
-        if(this.getEnvironnement().getArgent() >= this.getPrix()) {
-            this.getEnvironnement().ajouterBatiment(this);
-            this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() - this.getPrix());
-        }
-    }
-
 
     /**
      * Déplace le bâtiment vers une nouvelle position sur le terrain.
@@ -80,7 +68,7 @@ public abstract class Batiment extends Entite {
         int[] tabLigneColCentreBat = this.getEnvironnement().getTerrainDeJeu().mettreCoordsSurCentreTuile(nouvX, nouvY);
         double distanceNbTuile = (Math.abs(this.getX() - tabLigneColCentreBat[1]) + Math.abs(this.getY() - tabLigneColCentreBat[0]))/Terrain.TAILLE_TUILLE;
         int prixDepBatiment = (int) ((this.getPrix() /10) * distanceNbTuile);
-        if(this.getEnvironnement().getArgent() >= prixDepBatiment) {
+        if(this.getEnvironnement().transactionEstPossible(prixDepBatiment)) {
             if(!this.getEnvironnement().partieEstFinie()) {
                 if(this.getEnvironnement().tuileTourPosable(nouvX,nouvY) && !this.getEnvironnement().tuileContientUnBatiment(tabLigneColCentreBat[1],tabLigneColCentreBat[0])) {
                     this.setX(tabLigneColCentreBat[1]);

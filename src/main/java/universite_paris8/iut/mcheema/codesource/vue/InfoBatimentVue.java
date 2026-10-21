@@ -153,7 +153,7 @@ public class InfoBatimentVue {
         });
         boutonVendre.setOnAction(event -> {
             this.sonVue.jouerRetirer();
-            this.batiment.vendreBatiment();
+            this.batiment.getEnvironnement().vendreBatiment(batiment);
             this.paneJeu.getChildren().remove(paneInfo);
         });
     }
