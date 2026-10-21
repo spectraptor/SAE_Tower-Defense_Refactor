@@ -12,22 +12,27 @@ import java.util.ArrayList;
  * Il crée 2 bogues lorsque ses pvs sont faibles (<= 5) : un qui apparaît à l'endroit où il meurt, l'autre au début du chemin du GrosBogue.
  */
 public class GrosBogue extends Ennemi {
-  
+    private static final int SEUIL_DIVISION = 5;
     public GrosBogue(Environnement env, ArrayList<Point> chemin) {super(25, 1, 100, env, chemin);}
-
-  
 
     @Override
     public void effectueAction() {
         super.effectueAction();
-        if(this.getPv() <= 5 && !this.aAtteintDestination()) {
-            Point basePoint = this.getChemin().get(this.getChemin().size() - 1);
-            Point entree = new Point((int)this.getX() / Terrain.TAILLE_TUILLE, (int)this.getY() / Terrain.TAILLE_TUILLE);
-            BFS bfs = new BFS(this.getEnvironnement().getTerrainDeJeu(), basePoint);
-            ArrayList<Point> chemin = bfs.cheminDepuisSource(entree);
-            this.getEnvironnement().getEnnemis().add(new Bogue(this.getEnvironnement(), this.getChemin()));
-            this.getEnvironnement().getEnnemis().add(new Bogue(this.getEnvironnement(), chemin));
-            this.meurt();
+        if (this.getPv() <= SEUIL_DIVISION && !this.aAtteintDestination()) {
+            this.seDiviser();
         }
+    }
+
+    private void seDiviser() {
+        this.getEnvironnement().ajouterEnnemi(new Bogue(this.getEnvironnement(), this.getChemin()));
+        this.getEnvironnement().ajouterEnnemi(new Bogue(this.getEnvironnement(), this.cheminDepuisPositionActuelle()));
+        this.meurt();
+    }
+
+    public ArrayList<Point> cheminDepuisPositionActuelle() {
+        Point base = this.getChemin().get(this.getChemin().size() - 1);
+        Point positionActuelle = new Point((int) this.getX() / Terrain.TAILLE_TUILLE, (int) this.getY() / Terrain.TAILLE_TUILLE);
+        BFS bfs = new BFS(this.getEnvironnement().getTerrainDeJeu(), base);
+        return bfs.cheminDepuisSource(positionActuelle);
     }
 }
