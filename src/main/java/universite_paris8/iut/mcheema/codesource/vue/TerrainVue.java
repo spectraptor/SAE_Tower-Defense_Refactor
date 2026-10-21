@@ -70,7 +70,7 @@ public class TerrainVue {
                     case '0':
                         this.tilePane.getChildren().add(new ImageView(ch_gauche_haut_droite));
                         break;
-                    case 'b':
+                    case 'b', 's':
                         this.tilePane.getChildren().add(new ImageView(base));
                         break;
                     case 'h':
