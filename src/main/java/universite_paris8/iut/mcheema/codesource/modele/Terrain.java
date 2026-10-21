@@ -36,6 +36,7 @@ public class Terrain {
         9 = ch_bas_gauche_haut
         0 = ch_gauche_haut_droite
         b = base
+        e = entrée des ennemis
          */
         switch (this.niveauTerrain) {
             case 1:
@@ -43,7 +44,7 @@ public class Terrain {
                                                  {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
                                                  {'e','e','e','e','e','c','h','h','h','d','e','e','c','h','h','h','h','d','e','e'},
                                                  {'e','e','e','e','e','h','h','h','h','h','d','3','1','1','4','h','h','h','h','h'},
-                                                 {'e','e','e','e','c','h','h','h','h','h','h','2','h','h','2','h','h','3','1','1'},
+                                                 {'e','e','e','e','c','h','h','h','h','h','h','2','h','h','2','h','h','3','1','s'},
                                                  {'e','e','e','c','h','h','h','h','h','h','h','2','h','h','2','h','h','2','h','h'},
                                                  {'e','3','1','1','1','1','1','1','1','4','e','2','e','f','6','1','1','5','g','e'},
                                                  {'e','2','h','h','h','h','d','e','e','2','e','2','e','e','f','h','h','h','e','e'},
@@ -57,7 +58,7 @@ public class Terrain {
                 };
                 break;
             case 2:
-                this.terrainDeJeu = new char[][]{{'d','e','e','e','e','e','e','e','e','e','e','e','e','e','e','2','e','e','e','c'},
+                this.terrainDeJeu = new char[][]{{'d','e','e','e','e','e','e','e','e','e','e','e','e','e','e','s','e','e','e','c'},
                                                  {'h','h','h','h','h','h','h','h','g','e','e','c','h','h','h','2','h','h','h','h'},
                                                  {'h','h','h','h','h','3','1','1','1','1','1','1','1','4','h','2','h','h','h','h'},
                                                  {'h','3','1','1','1','5','g','e','e','c','h','h','h','2','h','6','1','1','4','h'},
@@ -71,7 +72,7 @@ public class Terrain {
                                                  {'b','1','1','5','h','h','h','e','e','f','h','h','h','h','h','2','h','h','h','h'},
                                                  {'h','h','h','h','h','h','h','e','e','e','f','h','h','3','1','5','h','h','h','h'},
                                                  {'h','h','h','h','h','h','g','e','e','e','e','f','h','2','h','h','h','h','h','h'},
-                                                 {'h','h','h','h','h','g','e','e','e','e','e','e','h','2','h','h','h','h','h','h'}
+                                                 {'h','h','h','h','h','g','e','e','e','e','e','e','h','s','h','h','h','h','h','h'}
                 };
                 break;
             case 3:
@@ -82,7 +83,7 @@ public class Terrain {
                                                  {'e','e','h','h','3','1','1','1','1','1','4','h','h','d','e','e','e','e','e','e'},
                                                  {'e','e','h','3','5','h','h','h','h','h','6','4','h','h','h','d','e','e','e','e'},
                                                  {'e','e','h','2','h','h','h','h','h','h','h','6','4','h','h','h','h','h','d','e'},
-                                                 {'e','e','h','7','1','1','1','1','1','b','h','h','7','1','1','1','1','1','1','1'},
+                                                 {'e','e','h','7','1','1','1','1','1','b','h','h','7','1','1','1','1','1','1','s'},
                                                  {'e','e','h','2','h','h','h','h','h','h','h','3','5','h','h','h','h','h','g','e'},
                                                  {'e','e','h','6','4','h','h','h','h','h','3','5','h','h','h','g','e','e','e','e'},
                                                  {'e','e','h','h','6','1','1','1','1','1','5','h','h','g','e','e','e','e','e','e'},
@@ -106,6 +107,33 @@ public class Terrain {
         return this.terrainDeJeu[i][j];
     }
 
+    /**
+     * Cherche les bases dans le terrain (tuiles 'b')
+     * @return la liste des points correspondant aux bases
+     */
+    public ArrayList<Point> trouverBases() {
+        return this.trouverTuiles('b');
+    }
+
+    /**
+     * Cherche les entrées des ennemis dans le terrain (tuiles 's')
+     * @return la liste des points correspondant aux entrées
+     */
+    public ArrayList<Point> trouverEntrees() {
+        return this.trouverTuiles('s');
+    }
+
+    private ArrayList<Point> trouverTuiles(char lettre) {
+        ArrayList<Point> points = new ArrayList<>();
+        for (int ligne = 0; ligne < this.obtenirHauteur(); ligne++) {
+            for (int colonne = 0; colonne < this.obtenirLargeur(); colonne++) {
+                if (this.avoirCodeTuile(ligne, colonne) == lettre) {
+                    points.add(new Point(colonne, ligne));
+                }
+            }
+        }
+        return points;
+    }
 
     /**
      * Convertis les coordoonnées x et y en numéro de ligne et colonne de la tuile.
@@ -144,7 +172,7 @@ public class Terrain {
 
         int ligne = nouveauY / TAILLE_TUILLE;
         int colonne = nouveauX / TAILLE_TUILLE;
-        return (avoirCodeTuile(ligne,colonne) >= '0' && avoirCodeTuile(ligne,colonne) <= '9') || avoirCodeTuile(ligne,colonne) == 'b';
+        return (avoirCodeTuile(ligne,colonne) >= '0' && avoirCodeTuile(ligne,colonne) <= '9') || avoirCodeTuile(ligne,colonne) == 'b' || avoirCodeTuile(ligne,colonne) == 's';
     }
 
     public boolean tuileTourPosable(int x, int y) {
