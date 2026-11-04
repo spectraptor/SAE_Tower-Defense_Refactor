@@ -1,6 +1,5 @@
 package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
-
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
@@ -9,16 +8,16 @@ import java.util.ArrayList;
 public abstract class BatimentTir extends BatimentAvecPortee{
     public final static int MIN_CADENCE_LIMITE = 15;
     public final static int MAX_CADENCE_LIMITE = 3000;
-    private int cadenceTir;
+    private double cadenceTir;
     private int degat;
 
-    public BatimentTir(String nom ,double x, double y, int portee, int degat, int prix, int cTir, Environnement env) {
+    public BatimentTir(String nom , double x, double y, int portee, int degat, int prix, double cTir, Environnement env) {
         super(nom,x, y, portee, prix, 4, env);
         this.cadenceTir = cTir;
         this.degat = degat;
     }
 
-    public void setCadenceTir(int cadenceTir) {
+    public void setCadenceTir(double cadenceTir) {
         this.cadenceTir = cadenceTir;
     }
 
@@ -29,7 +28,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
             boolean ennemiTrouve = false;
             while (i < ennemis.size() && !ennemiTrouve) {
                 Ennemi ennemi = ennemis.get(i);
-                if (this.estDansLaPortee(ennemi,this.getPortee()) && this.peutAttaquer(ennemi)) {
+                if (ennemi.estDansLaPortee(this,this.getPortee()) && this.peutAttaquer(ennemi)) {
                     this.getEnvironnement().ajouterProjectile(this.choisirProjectile(ennemis.get(i)));
                     ennemiTrouve = true;
                 }
@@ -46,15 +45,15 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         this.degat = degat;
     }
 
-    public int getCadenceTir() {
+    public double getCadenceTir() {
         return this.cadenceTir;
     }
 
     public void ameliorerBatiment() {
-        if(this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration()) {
+        if (this.getEnvironnement().transactionEstPossible(this.coutProchaineAmelioration())) {
             if (this.getNiveau() < this.getNiveauMax()) {
                 super.ameliorerBatiment();
-                this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
+                this.cadenceTir = (this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
             }
         }
     }
@@ -62,17 +61,22 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     public abstract boolean peutAttaquer(Ennemi cible);
 
     public boolean estCapableDeTirer() {
-        return this.getEnvironnement().getNbTours() % this.getCadenceTir() == 0;
+        return this.getEnvironnement().getNbTours() % (int) this.getCadenceTir() == 0;
     }
 
     public abstract Projectile choisirProjectile(Ennemi cible);
 
-    public static boolean cadenceEstModifiable(int nouvelleCadence) {
+    public static boolean cadenceEstModifiable(double nouvelleCadence) {
         return nouvelleCadence >= MIN_CADENCE_LIMITE && nouvelleCadence <= MAX_CADENCE_LIMITE;
     }
 
     public String avoirDescription() {
-        return  super.avoirDescription() + "\nCadence (s.) : " +  this.cadenceTir/60 +
+        return  super.avoirDescription() + "\nCadence (s.) : " +  (int) this.cadenceTir/60 +
                 "\nDegat : " + this.getDegat();
+    }
+
+    @Override
+    public boolean possedeCadenceTir() {
+        return true;
     }
 }
