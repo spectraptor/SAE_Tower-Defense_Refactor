@@ -56,10 +56,6 @@ public abstract class Ennemi extends Entite {
         return this.pvProperty;
     }
 
-    public int getVitesse() {
-        return this.vitesse;
-    }
-
     public boolean estVivant() {
         return this.getPv()>0;
     }
@@ -75,14 +71,6 @@ public abstract class Ennemi extends Entite {
             this.setX(depart.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
             this.setY(depart.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
         }
-    }
-
-    public int getIndiceChemin() {
-        return this.indiceChemin;
-    }
-
-    public void setIndiceChemin(int indice) {
-        this.indiceChemin = indice;
     }
 
     public int getArgentDonne() {
@@ -145,12 +133,10 @@ public abstract class Ennemi extends Entite {
     }
 
     /**
-     * Regarde si l'ennemi présent est un boss (càd une instance de GrosBogue, ErreurDeLogique, ErreurDeSyntaxe, ou erreurExecution)
-     * @return vrai si c'est une instance d'une de ces 4 classes, faux sinon
+     * retourne faux par défaut et pour devenir un boss, il faut @Override la méthode
      */
     public boolean estUnBoss() {
-        return (this instanceof GrosBogue || this instanceof ErreurDeLogique || this
-                instanceof ErreurDeSyntaxe || this instanceof ErreurExecution);
+        return false;
     }
 
     public String toString() {

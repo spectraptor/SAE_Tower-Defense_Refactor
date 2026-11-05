@@ -47,8 +47,4 @@ public class MissileZone extends Projectile {
         }
         return listeEnnemis;
     }
-
-    public int getPortee() {
-        return this.portee;
-    }
 }

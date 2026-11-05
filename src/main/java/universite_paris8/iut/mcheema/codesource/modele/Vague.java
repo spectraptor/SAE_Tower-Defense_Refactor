@@ -31,7 +31,7 @@ public class Vague {
      * @param niveau l'un des différents niveaux sur lesquels on peut jouer, utilisé pour  obtenir le chemins des ennemis.
      */
     public void debuteVague(int niveau) {
-        Niveau niveauChoisi = new Niveau(niveau);
+        Niveau niveauChoisi = new Niveau(this.environnement.getTerrainDeJeu());
         ArrayList<ArrayList<Point>> chemins = new ArrayList<>();
 
         for (int i = 0; i < niveauChoisi.getBases().size(); i++) {

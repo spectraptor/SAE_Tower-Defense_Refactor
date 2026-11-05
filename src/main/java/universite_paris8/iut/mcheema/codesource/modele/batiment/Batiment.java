@@ -63,7 +63,6 @@ public abstract class Batiment extends Entite {
         }
     }
 
-
     /**
      * Déplace le bâtiment vers une nouvelle position sur le terrain.
      * Le déplacement est soumis à plusieurs conditions :
@@ -80,7 +79,7 @@ public abstract class Batiment extends Entite {
         int[] tabLigneColCentreBat = this.getEnvironnement().getTerrainDeJeu().mettreCoordsSurCentreTuile(nouvX, nouvY);
         double distanceNbTuile = (Math.abs(this.getX() - tabLigneColCentreBat[1]) + Math.abs(this.getY() - tabLigneColCentreBat[0]))/Terrain.TAILLE_TUILLE;
         int prixDepBatiment = (int) ((this.getPrix() /10) * distanceNbTuile);
-        if(this.getEnvironnement().getArgent() >= prixDepBatiment) {
+        if(this.getEnvironnement().transactionEstPossible(prixDepBatiment)) {
             if(!this.getEnvironnement().partieEstFinie()) {
                 if(this.getEnvironnement().tuileTourPosable(nouvX,nouvY) && !this.getEnvironnement().tuileContientUnBatiment(tabLigneColCentreBat[1],tabLigneColCentreBat[0])) {
                     this.setX(tabLigneColCentreBat[1]);
@@ -123,6 +122,10 @@ public abstract class Batiment extends Entite {
 
     public String avoirDescription() {
         return   this.getNom() +  "      \n\n" + "Niveau actuel : " + this.getNiveau() + "/" + this.getNiveauMax() + "\n";
+    }
+
+    public boolean possedeCadenceTir() {
+        return false;
     }
 
 
