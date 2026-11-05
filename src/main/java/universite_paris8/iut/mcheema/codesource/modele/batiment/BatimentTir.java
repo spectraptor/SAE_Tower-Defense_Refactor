@@ -49,15 +49,16 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         return this.cadenceTir;
     }
 
-    public void ameliorerBatiment() {
-        if (this.getEnvironnement().transactionEstPossible(this.coutProchaineAmelioration())) {
-            if (this.getNiveau() < this.getNiveauMax()) {
-                super.ameliorerBatiment();
-                this.cadenceTir = (this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
-            }
-        }
+    @Override
+    public void appliquerAmeliorations() {
+        super.appliquerAmeliorations();
+        this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
     }
 
+    public int getCadenceTirBase() {
+        return this.cadenceTirBase;
+    }
+  
     public abstract boolean peutAttaquer(Ennemi cible);
 
     public boolean estCapableDeTirer() {
