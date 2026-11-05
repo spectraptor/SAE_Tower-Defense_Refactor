@@ -54,16 +54,15 @@ public abstract class Batiment extends Entite {
 
     public void vendreBatiment( ) {
         this.getEnvironnement().getBatiments().remove(this);
-        this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() + this.avoirPrixVente());
+        this.getEnvironnement().ajouterArgent(this.avoirPrixVente());
     }
 
     public void acheterBatiment() {
         if(this.getEnvironnement().getArgent() >= this.getPrix()) {
             this.getEnvironnement().ajouterBatiment(this);
-            this.getEnvironnement().setArgent(this.getEnvironnement().getArgent() - this.getPrix());
+            this.getEnvironnement().retirerArgent(this.getPrix());
         }
     }
-
 
     /**
      * Déplace le bâtiment vers une nouvelle position sur le terrain.
@@ -152,6 +151,10 @@ public abstract class Batiment extends Entite {
 
     public String avoirDescription() {
         return   this.getNom() +  "      \n\n" + "Niveau actuel : " + this.getNiveau() + "/" + this.getNiveauMax() + "\n";
+    }
+
+    public boolean possedeCadenceTir() {
+        return false;
     }
 
 

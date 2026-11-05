@@ -105,9 +105,9 @@ class TerrainTest {
 
     @Test
     void estDansTerrain_valide() {
-        assertTrue(terrain1.estDansTerrain(5, 7));
-        assertTrue(terrain2.estDansTerrain(0, 4));
-        assertTrue(terrain3.estDansTerrain(15, 0));
+        assertTrue(terrain1.estDansTerrain(7, 5));
+        assertTrue(terrain2.estDansTerrain(4, 0));
+        assertTrue(terrain3.estDansTerrain(0, 15));
     }
 
     @Test
@@ -116,16 +116,16 @@ class TerrainTest {
         int hauteurTerrains = terrain1.obtenirHauteur();
         int largeurTerrains = terrain1.obtenirLargeur();
 
-        assertTrue(terrain1.estDansTerrain(largeurTerrains - 1,hauteurTerrains - 1));
-        assertTrue(terrain2.estDansTerrain(largeurTerrains - 1, hauteurTerrains - 1));
-        assertTrue(terrain3.estDansTerrain(largeurTerrains - 1, hauteurTerrains - 1));
+        assertTrue(terrain1.estDansTerrain(hauteurTerrains - 1,largeurTerrains - 1));
+        assertTrue(terrain2.estDansTerrain(hauteurTerrains - 1, largeurTerrains - 1));
+        assertTrue(terrain3.estDansTerrain(hauteurTerrains - 1, largeurTerrains - 1));
     }
 
     @Test
     void estDansTerrain_invalide() {
         // Coordonnées négatives ou hors terrain
-        assertFalse(terrain1.estDansTerrain(-1, 19), "cas uniquement ligne hors du terrain");
-        assertFalse(terrain2.estDansTerrain(0, -6), "cas uniquement colonne hors du terrain");
+        assertFalse(terrain1.estDansTerrain(19, -1), "cas uniquement ligne hors du terrain");
+        assertFalse(terrain2.estDansTerrain(-6, 0), "cas uniquement colonne hors du terrain");
         assertFalse(terrain3.estDansTerrain(-9, -9), "cas ligne et colonne hors du terrain");
     }
 
