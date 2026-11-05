@@ -18,6 +18,7 @@ public abstract class Batiment extends Entite {
 
     // Réduction de 10 %
     public static final double TAUX_AMELIORATION_PAR_NIVEAU = 0.10;
+    public static final double TAUX_REDUCTION_DEPLACEMENT = 0.10;
 
     public Batiment(String nom, double x, double y, int prix, int nivMax, Environnement env) {
         super("B" + idCpt++, x, y, env);
@@ -76,18 +77,46 @@ public abstract class Batiment extends Entite {
      * @param nouvY la nouvelle coordonnée Y du batiment
      */
     public void deplacerBatiment(int nouvX,int nouvY) {
-        int[] tabLigneColCentreBat = this.getEnvironnement().getTerrainDeJeu().mettreCoordsSurCentreTuile(nouvX, nouvY);
-        double distanceNbTuile = (Math.abs(this.getX() - tabLigneColCentreBat[1]) + Math.abs(this.getY() - tabLigneColCentreBat[0]))/Terrain.TAILLE_TUILLE;
-        int prixDepBatiment = (int) ((this.getPrix() /10) * distanceNbTuile);
-        if(this.getEnvironnement().transactionEstPossible(prixDepBatiment)) {
-            if(!this.getEnvironnement().partieEstFinie()) {
-                if(this.getEnvironnement().tuileTourPosable(nouvX,nouvY) && !this.getEnvironnement().tuileContientUnBatiment(tabLigneColCentreBat[1],tabLigneColCentreBat[0])) {
-                    this.setX(tabLigneColCentreBat[1]);
-                    this.setY(tabLigneColCentreBat[0]);
-                    this.getEnvironnement().retirerArgent(prixDepBatiment);
-                }
-            }
+        int[] centreTuileTab = this.getEnvironnement().getTerrainDeJeu().mettreCoordsSurCentreTuile(nouvX, nouvY);
+        int centreX = centreTuileTab[1];
+        int centreY = centreTuileTab[0];
+
+        double distanceNbTuile = calculerDistance(centreX, centreY);
+        int prixDepBatiment = calculerNouveauPrix(distanceNbTuile);
+
+        if (this.peutConstruireBatiment(nouvX, nouvY)) {
+            this.setX(centreX);
+            this.setY(centreX);
+            this.getEnvironnement().setArgent((this.getEnvironnement().getArgent() - prixDepBatiment));
         }
+    }
+
+    /**
+     * Calcule la distance de Manhattan entre les coordonnées d'un bâtiment et sa nouvelle tuile.
+     *
+     * @param nouvCentreX la position x centrée de la nouvelle tuile.
+     * @param nouvCentreY la position y centrée de la nouvelle tuile.
+     *
+     * @return la distance de Manhattan entre le bâtiment et sa nouvelle tuile.
+     */
+    public double calculerDistance(int nouvCentreX, int nouvCentreY) {
+        return (Math.abs(this.getX() - nouvCentreX) + Math.abs(this.getY() - nouvCentreY)) / Terrain.TAILLE_TUILLE;
+    }
+
+    /**
+     * Calculer le nouveau prix que va coûter le placement d'un bâtiment en fonction de sa distance.
+     *
+     * @param distanceTuile la distance du bâtiment par rapport à la tuile qu'on veuille poser.
+     *
+     * @return le prix de placement.
+     *
+     */
+    public int calculerNouveauPrix(double distanceTuile) {
+        return (int) (this.getPrix() * Batiment.TAUX_REDUCTION_DEPLACEMENT * distanceTuile);
+    }
+
+    public boolean peutConstruireBatiment(int x, int y) {
+        return this.getEnvironnement().peutConstruireBatiment(x, y);
     }
 
     public void incrementerNiveau() {
