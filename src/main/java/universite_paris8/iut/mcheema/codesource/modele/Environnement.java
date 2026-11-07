@@ -135,7 +135,7 @@ public class Environnement {
      */
     public boolean peutConstruireBatiment(int x, int y) {
         int[] centreTuile = this.getTerrainDeJeu().mettreCoordsSurCentreTuile(x, y);
-        return !this.partieEstFinie() && this.tuileTourPosable(x, y) && !this.tuileContientUnBatiment(centreTuile[1], centreTuile[1]);
+        return !this.partieEstFinie() && this.tuileTourPosable(x, y) && !this.tuileContientUnBatiment(centreTuile[1], centreTuile[0]);
     }
 
     /**
