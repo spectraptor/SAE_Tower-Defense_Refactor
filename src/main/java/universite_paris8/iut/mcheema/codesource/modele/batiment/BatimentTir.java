@@ -2,6 +2,7 @@ package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
+import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileZone;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 import java.util.ArrayList;
 
@@ -61,7 +62,14 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         return this.getEnvironnement().getNbTours() % (int) this.getCadenceTir() == 0;
     }
 
-    public abstract Projectile choisirProjectile(Ennemi cible);
+
+    public Projectile choisirProjectile(Ennemi cible) {
+        Projectile projectile =  this.avoirProjectileAdapte(cible);
+        double multiplicateur = this.choisirAmeliorationDegat();
+        projectile.setVitesse((int) (projectile.getVitesse() * multiplicateur));
+        return projectile;
+    }
+
 
     public static boolean cadenceEstModifiable(double nouvelleCadence) {
         return nouvelleCadence >= MIN_CADENCE_LIMITE && nouvelleCadence <= MAX_CADENCE_LIMITE;
@@ -76,4 +84,10 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     public boolean possedeCadenceTir() {
         return true;
     }
+    
+    
+
+    public abstract double choisirAmeliorationDegat();
+    
+    public abstract Projectile avoirProjectileAdapte(Ennemi cible);
 }

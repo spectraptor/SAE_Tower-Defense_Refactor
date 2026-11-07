@@ -17,22 +17,32 @@ public class Debugger extends BatimentTir {
         super("Debugger",x, y, 200,2, 150,500, env);
     }
 
+
     @Override
-    public Projectile choisirProjectile(Ennemi cible) {
+    public Projectile avoirProjectileAdapte(Ennemi cible) {
         Projectile projectile = new MissileTete(this.getX(),this.getY(),this.getDegat(),cible,this.getEnvironnement());
-        switch (this.getNiveau()) {
-            case 2:
-                projectile.setVitesse((int) (projectile.getVitesse()*1.4));
-                break;
-            case 3:
-                projectile.setVitesse((projectile.getVitesse()*2));
-                break;
-            case 4:
-                projectile = new MissileFragmentation(this.getX(),this.getY(),this.getDegat(),cible,this.getEnvironnement());
-                break;
-        }
+        if (this.getNiveau() == this.getNiveauMax())
+            projectile = new MissileFragmentation(this.getX(),this.getY(),this.getDegat(),cible,this.getEnvironnement());
         return projectile;
     }
+
+    @Override
+    public double choisirAmeliorationDegat() {
+        double multiplicateurDegat = 1;
+        switch (this.getNiveau()) {
+            case 2:
+                multiplicateurDegat = 1.4;
+                break;
+            case 3:
+                multiplicateurDegat = 2;
+                break;
+            case 4:
+                multiplicateurDegat = 2.2;
+                break;
+        }
+        return multiplicateurDegat;
+    }
+
     @Override
     public boolean peutAttaquer(Ennemi cible) {
         return (!(cible instanceof EnnemiVolant));
