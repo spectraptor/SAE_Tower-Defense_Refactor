@@ -54,10 +54,6 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         super.appliquerAmeliorations();
         this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
     }
-
-    public int getCadenceTirBase() {
-        return this.cadenceTirBase;
-    }
   
     public abstract boolean peutAttaquer(Ennemi cible);
 

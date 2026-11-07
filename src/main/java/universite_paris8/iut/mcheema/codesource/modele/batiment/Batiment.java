@@ -130,6 +130,7 @@ public abstract class Batiment extends Entite {
             this.incrementerNiveau();
         }
     }
+
     
     public abstract void appliquerAmeliorations();
 
