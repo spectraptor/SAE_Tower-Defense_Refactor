@@ -124,13 +124,16 @@ public abstract class Batiment extends Entite {
     }
 
     public void ameliorerBatiment() {
-        if (this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration() && this.getNiveau() < this.getNiveauMax()) {
+        if (this.ameliorationEstPossible()) {
             this.appliquerAmeliorations();
             this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
             this.incrementerNiveau();
         }
     }
 
+    public boolean ameliorationEstPossible() {
+        return this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration() && this.getNiveau() < this.getNiveauMax();
+    }
     
     public abstract void appliquerAmeliorations();
 
