@@ -86,7 +86,7 @@ public abstract class Batiment extends Entite {
 
         if (this.peutConstruireBatiment(nouvX, nouvY)) {
             this.setX(centreX);
-            this.setY(centreX);
+            this.setY(centreY);
             this.getEnvironnement().setArgent((this.getEnvironnement().getArgent() - prixDepBatiment));
         }
     }
