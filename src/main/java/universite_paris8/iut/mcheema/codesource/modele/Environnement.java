@@ -195,24 +195,24 @@ public class Environnement {
 
     public void ajouterArgent(int argent) {
         if (argent > 0)
-            this.argentProperty.setValue(getArgent() + argent);
+            this.setArgent(this.getArgent() + argent);
     }
 
     public void retirerArgent(int argent) {
         if (argent > 0)
-            this.argentProperty.setValue(getArgent() - argent);
+            this.setArgent(this.getArgent() - argent);
     }
 
     public void acheterBatiment(Batiment batiment) {
         if(this.transactionEstPossible(batiment.getPrix())) {
             this.ajouterBatiment(batiment);
-            this.setArgent(this.getArgent() - batiment.getPrix());
+            this.retirerArgent(batiment.getPrix());
         }
     }
 
     public void vendreBatiment(Batiment batiment) {
         this.getBatiments().remove(batiment);
-        this.setArgent(this.getArgent() + batiment.avoirPrixVente());
+        this.ajouterArgent(batiment.avoirPrixVente());
     }
 
     public boolean transactionEstPossible(int coutTransaction) {
