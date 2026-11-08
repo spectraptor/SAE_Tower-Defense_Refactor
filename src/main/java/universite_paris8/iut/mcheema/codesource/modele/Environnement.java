@@ -178,9 +178,7 @@ public class Environnement {
 
 
     public boolean partieEstFinie() {
-        return this.getBase().estDetruite() || (this.gestionVague.getNumVagueCourante() ==
-                this.gestionVague.getNbreVagues() - 1 && this.ennemis.isEmpty() && this.gestionVague.
-                getVagues()[this.gestionVague.getNumVagueCourante()].getlisteEnnemisVague().isEmpty());
+        return this.getBase().estDetruite() || this.gestionVague.derniereVagueEstTerminee();
     }
 
     public int getNbTours() {
