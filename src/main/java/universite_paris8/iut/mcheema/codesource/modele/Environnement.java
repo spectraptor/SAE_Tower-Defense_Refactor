@@ -42,6 +42,16 @@ public class Environnement {
         return instanceEnvironnement;
     }
 
+    public void reinitialiserEnvironnement(int niveau) {
+        this.terrainDeJeu = new Terrain(niveau);
+        this.gestionVague = new GestionVague(niveau, this);
+        this.base = new Base();
+        this.nbTours = 0;
+        this.batiments.clear();
+        this.ennemis.clear();
+        this.projectiles.clear();
+        this.setArgent(500);
+    }
 
     public Terrain getTerrainDeJeu() {
         return this.terrainDeJeu;
