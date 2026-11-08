@@ -23,20 +23,20 @@ public class BombeLogique extends BatimentTir {
     }
 
     @Override
-    public double choisirAmeliorationDegat() {
-        double multiplicateurDegat = 1;
+    public double choisirAmeliorationVitesse() {
+        double multiplicateurVitesse = 1;
         switch (this.getNiveau()) {
             case 2:
-                multiplicateurDegat = 1.3;
+                multiplicateurVitesse = 1.3;
                 break;
             case 3:
-                multiplicateurDegat = 2;
+                multiplicateurVitesse = 2;
                 break;
             case 4:
-                multiplicateurDegat = 3;
+                multiplicateurVitesse = 3;
                 break;
         }
-        return multiplicateurDegat;
+        return multiplicateurVitesse;
     }
 
     @Override

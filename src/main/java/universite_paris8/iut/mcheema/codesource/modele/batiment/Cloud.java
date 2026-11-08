@@ -3,10 +3,7 @@ package universite_paris8.iut.mcheema.codesource.modele.batiment;
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.EnnemiCammoufle;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.EnnemiVolant;
-import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileFragmentation;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileTete;
-import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileZone;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 
 public class Cloud extends BatimentTir {
@@ -26,20 +23,20 @@ public class Cloud extends BatimentTir {
     }
 
     @Override
-    public double choisirAmeliorationDegat() {
-        double multiplicateurDegat = 1;
+    public double choisirAmeliorationVitesse() {
+        double multiplicateurVitesse = 1;
         switch (this.getNiveau()) {
             case 2:
-                multiplicateurDegat = 1.2;
+                multiplicateurVitesse = 1.2;
                 break;
             case 3:
-                multiplicateurDegat = 1.5;
+                multiplicateurVitesse = 1.5;
                 break;
             case 4:
-                multiplicateurDegat = 2;
+                multiplicateurVitesse = 2;
                 break;
         }
-        return multiplicateurDegat;
+        return multiplicateurVitesse;
     }
 
 }

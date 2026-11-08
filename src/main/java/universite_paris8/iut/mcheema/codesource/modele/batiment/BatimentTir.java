@@ -2,7 +2,6 @@ package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
-import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileZone;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 import java.util.ArrayList;
 
@@ -65,7 +64,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
 
     public Projectile choisirProjectile(Ennemi cible) {
         Projectile projectile =  this.avoirProjectileAdapte(cible);
-        double multiplicateur = this.choisirAmeliorationDegat();
+        double multiplicateur = this.choisirAmeliorationVitesse();
         projectile.setVitesse((int) (projectile.getVitesse() * multiplicateur));
         return projectile;
     }
@@ -87,7 +86,7 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     
     
 
-    public abstract double choisirAmeliorationDegat();
+    public abstract double choisirAmeliorationVitesse();
     
     public abstract Projectile avoirProjectileAdapte(Ennemi cible);
 }

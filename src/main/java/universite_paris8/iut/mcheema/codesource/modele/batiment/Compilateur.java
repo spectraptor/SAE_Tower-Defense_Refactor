@@ -23,20 +23,20 @@ public class Compilateur extends BatimentTir {
     }
 
     @Override
-    public double choisirAmeliorationDegat() {
-        double multiplicateurDegat = 1;
+    public double choisirAmeliorationVitesse() {
+        double multiplicateurVitesse = 1;
         switch (this.getNiveau()) {
             case 2:
-                multiplicateurDegat = 1.5;
+                multiplicateurVitesse = 1.5;
                 break;
             case 3:
-                multiplicateurDegat = 1.8;
+                multiplicateurVitesse = 1.8;
                 break;
             case 4:
-                multiplicateurDegat = 2.5;
+                multiplicateurVitesse = 2.5;
                 break;
         }
-        return multiplicateurDegat;
+        return multiplicateurVitesse;
     }
 
     @Override
