@@ -93,7 +93,7 @@ public class Controleur implements Initializable {
 
     public void chargerNiveau(int niveau) {
 
-        this.environnement = new Environnement(niveau);
+        this.environnement = Environnement.getInstanceEnvironnement(niveau);
 
         this.labelVieBase.textProperty().bind(this.environnement.getBase().pvProperty().asString());
         this.labelArgent.textProperty().bind(this.environnement.argentProperty().asString());

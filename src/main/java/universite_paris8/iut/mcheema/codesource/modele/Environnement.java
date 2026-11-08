@@ -13,6 +13,7 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
  * l'apparition de tous les élements du jeu (base, terrain, liste d'ennemis, liste de batiments).
  */
 public class Environnement {
+    private static Environnement instanceEnvironnement = null;
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Batiment> batiments;
     private ObservableList<Projectile> projectiles;
@@ -23,7 +24,7 @@ public class Environnement {
     private SimpleIntegerProperty argentProperty;
 
 
-    public Environnement(int niveau) {
+    private Environnement(int niveau) {
         this.ennemis = FXCollections.observableArrayList();
         this.batiments = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
@@ -33,6 +34,14 @@ public class Environnement {
         this.base = new Base();
         this.argentProperty = new SimpleIntegerProperty(500);
     }
+
+    public static Environnement getInstanceEnvironnement(int niveau) {
+        if (instanceEnvironnement == null) {
+            instanceEnvironnement = new Environnement(niveau);
+        }
+        return instanceEnvironnement;
+    }
+
 
     public Terrain getTerrainDeJeu() {
         return this.terrainDeJeu;
