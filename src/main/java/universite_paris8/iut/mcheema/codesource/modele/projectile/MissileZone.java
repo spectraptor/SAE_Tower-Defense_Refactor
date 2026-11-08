@@ -18,33 +18,35 @@ public class MissileZone extends Projectile {
         this.yCible = yCible;
     }
 
-    @Override
-    public void effectueAction() {
-        double distX = xCible - this.getX();
-        double distY = yCible - this.getY();
-        double distance = Math.sqrt(distX * distX + distY * distY);
-        if(distance <= this.getVitesse()) {
-            ArrayList<Ennemi> listeEnnemis = this.ennemisDansPortee();
-            for(Ennemi ennemi : listeEnnemis) {
-                ennemi.subirDegats(this.getDegat());
-            }
-            this.setEstArrive(true);
-        }
-        else {
-            this.deplaceMissile(distX,distY,distance);
-        }
-    }
+
 
     public ArrayList<Ennemi> ennemisDansPortee() {
         ArrayList<Ennemi> listeEnnemis = new ArrayList<>();
         for (Ennemi ennemi : this.getEnvironnement().getEnnemis()) {
-            double distX = ennemi.getX() - this.getX();
-            double distY = ennemi.getY() - this.getY();
-            double distance = distX * distX + distY * distY;
-            if(distance <= this.portee * this.portee) {
+            double[] difference = this.calculDifference();
+            double distX = difference[0];
+            double distY = difference[1];
+            double distance = this.calculDistance(distX,distY);
+            if(distance <= this.portee) {
                 listeEnnemis.add(ennemi);
             }
         }
         return listeEnnemis;
+    }
+
+    @Override
+    public void gererImpact() {
+        ArrayList<Ennemi> listeEnnemis = this.ennemisDansPortee();
+        for(Ennemi ennemi : listeEnnemis) {
+            ennemi.subirDegats(this.getDegat());
+        }
+    }
+
+    @Override
+    public double[] calculDifference() {
+        double[] difference = new double[2];
+        difference[0] = this.xCible - this.getX();
+        difference[1] = this.yCible - this.getY();
+        return difference;
     }
 }
