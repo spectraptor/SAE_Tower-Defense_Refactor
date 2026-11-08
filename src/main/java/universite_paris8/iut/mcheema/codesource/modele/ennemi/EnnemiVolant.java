@@ -10,4 +10,9 @@ public abstract class EnnemiVolant extends Ennemi {
         super(pv, vitesse, argentDonne, env, chemin);
     }
 
+    @Override
+    public boolean estVolant() {
+        return true;
+    }
+
 }

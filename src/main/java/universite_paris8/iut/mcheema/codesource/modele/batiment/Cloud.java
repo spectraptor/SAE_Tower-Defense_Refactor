@@ -2,11 +2,8 @@ package universite_paris8.iut.mcheema.codesource.modele.batiment;
 
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.EnnemiCammoufle;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.EnnemiVolant;
-import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileFragmentation;
+import universite_paris8.iut.mcheema.codesource.modele.ennemi.EnnemiCamoufle;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileTete;
-import universite_paris8.iut.mcheema.codesource.modele.projectile.MissileZone;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 
 public class Cloud extends BatimentTir {
@@ -17,7 +14,7 @@ public class Cloud extends BatimentTir {
 
     @Override
     public boolean peutAttaquer(Ennemi cible) {
-        return (!(cible instanceof EnnemiCammoufle));
+        return !cible.estCamoufle();
     }
 
     @Override

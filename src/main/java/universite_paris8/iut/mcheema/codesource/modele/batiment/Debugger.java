@@ -35,7 +35,7 @@ public class Debugger extends BatimentTir {
     }
     @Override
     public boolean peutAttaquer(Ennemi cible) {
-        return (!(cible instanceof EnnemiVolant));
+        return !cible.estVolant();
     }
 
 }
