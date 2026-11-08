@@ -47,7 +47,7 @@ public class Controleur implements Initializable {
 
     private boolean etatPause = true;
 
-    private int numBatimentSelectionne = -1;
+    private TypeBatiment typeBatimentSelectionne = null;
 
     private SonVue sonVue;
 
@@ -137,40 +137,20 @@ public class Controleur implements Initializable {
     }
 
     @FXML
-    public void ajouterTour(MouseEvent mouseEvent) {
+    public void ajouterBatiment(MouseEvent mouseEvent) {
         int coordsSourisX = (int) mouseEvent.getX();
         int coordsSourisY = (int) mouseEvent.getY();
 
-        if (this.numBatimentSelectionne != -1) {
-            this.environnement.poserBatiment(coordsSourisX, coordsSourisY, this.numBatimentSelectionne);
-            this.numBatimentSelectionne = -1;
+        if (this.typeBatimentSelectionne != null) {
+            this.environnement.poserBatiment(coordsSourisX, coordsSourisY, this.typeBatimentSelectionne);
+            this.typeBatimentSelectionne = null;
         }
     }
 
     @FXML
-    public void choisirBouton(ActionEvent actionEvent) {
+    public void choisirBatiment(ActionEvent actionEvent) {
         Button bouton = (Button) actionEvent.getSource();
-
-        switch(bouton.getText()) {
-            case "Compilateur":
-                this.numBatimentSelectionne = 1;
-                break;
-            case "Cloud":
-                this.numBatimentSelectionne = 2;
-                break;
-            case "Debugger":
-                this.numBatimentSelectionne = 3;
-                break;
-            case "Bombe Logique":
-                this.numBatimentSelectionne = 4;
-                break;
-            case "Surcadence":
-                this.numBatimentSelectionne = 5;
-                break;
-            case "RAM":
-                this.numBatimentSelectionne = 6;
-                break;
-        }
+        typeBatimentSelectionne = TypeBatiment.valueOf(bouton.getId());
     }
 
     @FXML
