@@ -186,13 +186,11 @@ public class Controleur implements Initializable {
         if (etatRapide) {
             gameLoop.setRate(1);
             etatRapide = false;
-            System.out.println("Jeu mis en x1");
 
         }
         else {
             gameLoop.setRate(2);
             etatRapide = true;
-            System.out.println("Jeu mis en x2");
         }
     }
 
