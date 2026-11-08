@@ -17,6 +17,16 @@ public class Point {
     public int getLigne() { return this.ligne; }
     public int getColonne() { return this.colonne;}
 
+    public double avoirXPixels() {
+        return this.colonne * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE / 2;
+    }
+
+    public double avoirYPixels() {
+        return this.ligne * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE / 2;
+    }
+
+
+
 
 
     public boolean equals(Object obj) {
