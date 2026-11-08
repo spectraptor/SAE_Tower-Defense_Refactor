@@ -28,7 +28,9 @@ public class Environnement {
         this.batiments = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.terrainDeJeu = new Terrain(niveau);
-        this.gestionVague = new GestionVague(niveau, this);
+        FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemi(this);
+        ConfigurationEnnemi configurationEnnemi = new ConfigurationEnnemi(fabriqueEnnemi);
+        this.gestionVague = new GestionVague(new Niveau(this.terrainDeJeu), this, configurationEnnemi);
         this.nbTours = 0;
         this.base = new Base();
         this.argentProperty = new SimpleIntegerProperty(500);
