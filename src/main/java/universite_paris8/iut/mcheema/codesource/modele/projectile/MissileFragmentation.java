@@ -3,6 +3,8 @@ package universite_paris8.iut.mcheema.codesource.modele.projectile;
 import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 
+import java.util.ArrayList;
+
 public class MissileFragmentation extends MissileTeleguide {
     // Va a ces coord et va ensuite se fragmenté en plusieurs missiles a tete chercheuse
     private final static int X_SUIVRE = 320;
@@ -13,48 +15,44 @@ public class MissileFragmentation extends MissileTeleguide {
     }
 
     @Override
-    public void effectueAction() {
-        double distX = X_SUIVRE - this.getX();
-        double distY = Y_SUIVRE - this.getY();
-        double distance = Math.sqrt(distX * distX + distY * distY);
-        int nombreEnnemi = this.getEnvironnement().getEnnemis().size();
-        if (distance <= this.getVitesse()) {
-            this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX(), this.getY(), this.getDegat(), this.getCible(), this.getEnvironnement()));
-
-           if(nombreEnnemi == 1) {
-               this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() + DISTANCE_MISSILE, this.getY(), this.getDegat(), this.getCible(), this.getEnvironnement()));
-               this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() - DISTANCE_MISSILE, this.getY(), this.getDegat(), this.getCible(), this.getEnvironnement()));
-           }
-           else if (nombreEnnemi >= 2) {
-                Ennemi cible2 = null;
-                for (Ennemi ennemi : this.getEnvironnement().getEnnemis()) {
-                    if (ennemi != this.getCible()) {
-                        cible2 = ennemi;
-                    }
-                }
-                if (cible2 != null) {
-                    this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() + DISTANCE_MISSILE, this.getY(), this.getDegat(), cible2, this.getEnvironnement()));
-                    if (nombreEnnemi == 2) {
-                        this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() - DISTANCE_MISSILE, this.getY(), this.getDegat(), this.getCible(), this.getEnvironnement()));
-                    }
-                    if (nombreEnnemi >= 3) {
-                        Ennemi cible3 = null;
-                        for (Ennemi ennemi : this.getEnvironnement().getEnnemis()) {
-                            if (ennemi != this.getCible() && cible2 != ennemi) {
-                                cible3 = ennemi;
-                            }
-                        }
-                        if (cible3 != null) {
-                            this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() - DISTANCE_MISSILE, this.getY(), this.getDegat(), cible3, this.getEnvironnement()));
-                        }
-                    }
-                }
-            }
-            this.setEstArrive(true);
-        }
-         else {
-            super.deplaceMissile(distX, distY, distance);
-        }
+    public double[] calculDifference() {
+        double[] difference = new double[2];
+        difference[0] = X_SUIVRE - this.getX();
+        difference[1] = Y_SUIVRE - this.getY();
+        return difference;
     }
+
+    @Override
+    public void gererImpact() {
+        ArrayList<Ennemi> autreCibles = this.selectionnerCiblesSecondaires();
+        int nombreEnnemis = autreCibles.size();
+        Ennemi c1 = this.getCible();
+        Ennemi c2 = this.getCible();
+        Ennemi c3 = this.getCible();
+        if (!autreCibles.isEmpty()) {
+            c2 = autreCibles.get(0);
+            if (nombreEnnemis >= 2)
+                c3 = autreCibles.get(1);
+        }
+        this.creeProjectiles(c1,c2,c3);
+    }
+
+    public void creeProjectiles(Ennemi c1,Ennemi c2,Ennemi c3) {
+        this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX(), this.getY(), this.getDegat(), c1, this.getEnvironnement()));
+        this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() + DISTANCE_MISSILE, this.getY(), this.getDegat(), c2, this.getEnvironnement()));
+        this.getEnvironnement().getProjectiles().add(new MissileTete(this.getX() - DISTANCE_MISSILE, this.getY(), this.getDegat(), c3, this.getEnvironnement()));
+    }
+
+    public ArrayList<Ennemi> selectionnerCiblesSecondaires() {
+        ArrayList<Ennemi> cibles = new ArrayList<>();
+        for (Ennemi ennemi : this.getEnvironnement().getEnnemis()) {
+            if (ennemi != this.getCible()) {
+                cibles.add(ennemi);
+            }
+        }
+        return cibles;
+    }
+
+
 
 }
