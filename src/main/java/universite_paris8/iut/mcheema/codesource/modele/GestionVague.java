@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 public class GestionVague {
 
+    private static final int BONUS_SOMME_ENTRE_VAGUES = 100;
+    private static final int BONUS_COEFFICIENT_ENTRE_VAGUES = 10;
+
     private static final int DELAI_ENTRE_VAGUES_FRAMES = 300;
     private static final int TEMPS_SPAWN_ENNEMIS_FRAMES = 100;
     private static final int MAX_VAGUES = 8;
@@ -59,22 +62,29 @@ public class GestionVague {
         this.numVagueCouranteProperty.setValue(val);
     }
 
-    public ArrayList<Ennemi> listeEnnemisVagueCourante() {
-        return this.vagues[this.getNumVagueCourante()].getlisteEnnemisVague();
+    public Vague obtenirVagueCourante() {
+        return this.vagues[this.getNumVagueCourante()];
     }
 
-    //  Méthode principale qui gère le fonctionnement de chaque vague (insertition des ennemis dans l'environnement avec un délai, pauses...)
-    public void mettreAJour() {
-        if (!this.listeEnnemisVagueCourante().isEmpty()) {
-            if (this.environnement.getNbTours() % TEMPS_SPAWN_ENNEMIS_FRAMES == 0) {
-                this.environnement.ajouterEnnemi(this.listeEnnemisVagueCourante().remove(0));
-            }
-        }
+    public ArrayList<Ennemi> avoirEnnemisVagueCourante() {
+        return this.obtenirVagueCourante().getlisteEnnemisVague();
+    }
 
-        if (this.getVagues()[this.getNumVagueCourante()].vagueEstTerminee()) {
+    public void faireApparaitreEnnemis() {
+        if (!this.avoirEnnemisVagueCourante().isEmpty() && this.environnement.getNbTours() % TEMPS_SPAWN_ENNEMIS_FRAMES == 0)
+            this.environnement.ajouterEnnemi(this.avoirEnnemisVagueCourante().remove(0));
+    }
+
+    public boolean vagueCouranteEstTerminee() {
+        return this.obtenirVagueCourante().vagueEstTerminee();
+    }
+
+    public void verifierFinVague() {
+        if (this.vagueCouranteEstTerminee())
             this.pauseEntreVague = true;
-        }
+    }
 
+    public void gererPausesEntreVagues() {
         // Regarde si la vague est en "pause".
         if (this.pauseEntreVague)
             this.framesPauseVague++;
@@ -86,6 +96,13 @@ public class GestionVague {
         }
     }
 
+    //  Méthode principale qui gère le fonctionnement de chaque vague (insertition des ennemis dans l'environnement avec un délai, pauses...)
+    public void mettreAJour() {
+        this.faireApparaitreEnnemis();
+        this.verifierFinVague();
+        this.gererPausesEntreVagues();
+    }
+
     /**
      * Incrémente le numéro de vague pour passer à la vague suivante.
      */
@@ -93,9 +110,8 @@ public class GestionVague {
         // Ligne obligatoire : sinon, lorsque la derniere vague est finie,
         // on va à nouveau incrémenter et accéder à un indice qui n'existe pas.
         if (this.getNumVagueCourante() < this.getNbreVagues() - 1) {
-            this.environnement.ajouterArgent(100 + this.getNumVagueCourante() * 10);
+            this.environnement.ajouterArgent(GestionVague.BONUS_SOMME_ENTRE_VAGUES + this.getNumVagueCourante() * GestionVague.BONUS_COEFFICIENT_ENTRE_VAGUES);
             this.setNumVagueCourante(this.getNumVagueCourante() + 1);
         }
-
     }
 }
