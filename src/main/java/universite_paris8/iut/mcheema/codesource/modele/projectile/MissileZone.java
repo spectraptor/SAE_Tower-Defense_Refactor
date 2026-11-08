@@ -23,9 +23,8 @@ public class MissileZone extends Projectile {
     public ArrayList<Ennemi> ennemisDansPortee() {
         ArrayList<Ennemi> listeEnnemis = new ArrayList<>();
         for (Ennemi ennemi : this.getEnvironnement().getEnnemis()) {
-            double[] difference = this.calculDifference();
-            double distX = difference[0];
-            double distY = difference[1];
+            double distX = ennemi.getX() - this.xCible;
+            double distY = ennemi.getY() - this.yCible;
             double distance = this.calculDistance(distX,distY);
             if(distance <= this.portee) {
                 listeEnnemis.add(ennemi);
