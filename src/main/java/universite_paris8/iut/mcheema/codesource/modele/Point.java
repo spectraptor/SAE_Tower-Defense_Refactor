@@ -17,7 +17,12 @@ public class Point {
     public int getLigne() { return this.ligne; }
     public int getColonne() { return this.colonne;}
 
-
+    public int getCentreX() {
+        return this.colonne * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE / 2;
+    }
+    public int getCentreY() {
+        return this.ligne * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE / 2;
+    }
 
     public boolean equals(Object obj) {
         if (this == obj)
