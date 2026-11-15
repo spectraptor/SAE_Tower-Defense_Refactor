@@ -52,7 +52,9 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     @Override
     public void appliquerAmeliorations() {
         super.appliquerAmeliorations();
-        this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
+        int nouvelleCadence = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
+        if (cadenceEstModifiable(nouvelleCadence))
+            this.cadenceTir = nouvelleCadence;
     }
   
     public abstract boolean peutAttaquer(Ennemi cible);
