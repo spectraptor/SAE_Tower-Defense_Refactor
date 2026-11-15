@@ -14,7 +14,7 @@ public class MissileFragmentation extends MissileTeleguide {
     }
 
     @Override
-    public boolean conditionDeclenchementImpact(double distance) {
+    public boolean doitDeclencherAction(double distance) {
         return distance <= distanceInitiale / 2;
     }
 

@@ -48,15 +48,13 @@ public abstract class Projectile extends Entite {
         this.setY(this.getY() + vUnitY * this.getVitesse());
     }
 
-
-
     @Override
     public void effectueAction() {
         double[] difference = this.calculDifference();
         double distX = difference[0];
         double distY = difference[1];
         double distance = this.calculDistance(distX,distY);
-        if(this.conditionDeclenchementImpact(distance)) {
+        if(this.doitDeclencherAction(distance)) {
             this.gererImpact();
             this.setEstArrive(true);
         }
@@ -65,7 +63,7 @@ public abstract class Projectile extends Entite {
         }
     }
 
-    public boolean conditionDeclenchementImpact(double distance) {
+    public boolean doitDeclencherAction(double distance) {
         return distance <= this.getVitesse();
     }
 
