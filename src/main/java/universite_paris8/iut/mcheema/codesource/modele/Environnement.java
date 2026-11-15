@@ -13,6 +13,7 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
  * l'apparition de tous les élements du jeu (base, terrain, liste d'ennemis, liste de batiments).
  */
 public class Environnement {
+    private final static int ARGENT_DEBUT = 500;
     private static Environnement instanceEnvironnement = null;
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Batiment> batiments;
@@ -32,7 +33,7 @@ public class Environnement {
         this.gestionVague = new GestionVague(niveau, this);
         this.nbTours = 0;
         this.base = new Base();
-        this.argentProperty = new SimpleIntegerProperty(500);
+        this.argentProperty = new SimpleIntegerProperty(ARGENT_DEBUT);
     }
 
     public static Environnement getInstanceEnvironnement(int niveau) {
@@ -50,7 +51,7 @@ public class Environnement {
         this.batiments.clear();
         this.ennemis.clear();
         this.projectiles.clear();
-        this.setArgent(500);
+        this.setArgent(ARGENT_DEBUT);
     }
 
     public Terrain getTerrainDeJeu() {
