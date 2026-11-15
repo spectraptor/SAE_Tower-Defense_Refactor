@@ -56,13 +56,17 @@ public abstract class Projectile extends Entite {
         double distX = difference[0];
         double distY = difference[1];
         double distance = this.calculDistance(distX,distY);
-        if(distance <= this.getVitesse()) {
+        if(this.conditionDeclenchementImpact(distance)) {
             this.gererImpact();
             this.setEstArrive(true);
         }
         else {
             this.deplaceMissile(distX,distY);
         }
+    }
+
+    public boolean conditionDeclenchementImpact(double distance) {
+        return distance <= this.getVitesse();
     }
 
     public double calculDistance(double distX,double distY) {
