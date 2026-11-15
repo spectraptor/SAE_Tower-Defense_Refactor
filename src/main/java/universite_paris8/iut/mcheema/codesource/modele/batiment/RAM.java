@@ -22,9 +22,13 @@ public class RAM extends Batiment {
 
     @Override
     public void effectueAction() {
-        if(this.getEnvironnement().getNbTours() % this.tempsAtt == 0) {
+        if(this.estTempsEcoule()) {
             this.getEnvironnement().ajouterArgent(this.argentDonne);
         }
+    }
+
+    public boolean estTempsEcoule() {
+        return this.getEnvironnement().getNbTours() % this.tempsAtt == 0;
     }
 
     @Override

@@ -23,7 +23,6 @@ import universite_paris8.iut.mcheema.codesource.controleur.listeners.Observateur
 import universite_paris8.iut.mcheema.codesource.controleur.listeners.ObservateurListeProjectiles;
 import universite_paris8.iut.mcheema.codesource.modele.*;
 import javafx.util.Duration;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.*;
 import universite_paris8.iut.mcheema.codesource.vue.SonVue;
 import universite_paris8.iut.mcheema.codesource.vue.TerrainVue;
 
@@ -93,7 +92,8 @@ public class Controleur implements Initializable {
 
     public void chargerNiveau(int niveau) {
 
-        this.environnement = new Environnement(niveau);
+        this.environnement = Environnement.getInstanceEnvironnement(niveau);
+        this.environnement.reinitialiserEnvironnement(niveau);
 
         this.labelVieBase.textProperty().bind(this.environnement.getBase().pvProperty().asString());
         this.labelArgent.textProperty().bind(this.environnement.argentProperty().asString());
@@ -166,13 +166,11 @@ public class Controleur implements Initializable {
         if (etatRapide) {
             gameLoop.setRate(1);
             etatRapide = false;
-            System.out.println("Jeu mis en x1");
 
         }
         else {
             gameLoop.setRate(2);
             etatRapide = true;
-            System.out.println("Jeu mis en x2");
         }
     }
 

@@ -43,6 +43,14 @@ public abstract class Ennemi extends Entite {
         setChemin(chemin);
     }
 
+    public int getVitesse() {
+        return this.vitesse;
+    }
+
+    public void setIndiceChemin(int indice) {
+        this.indiceChemin = indice;
+    }
+
 
     public final int getPv() {
         return this.pvProperty.getValue();

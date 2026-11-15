@@ -20,7 +20,6 @@ public class Base {
 
     public final IntegerProperty pvProperty() { return this.pvProperty;}
 
-    // Peut utiliser cette méthode plus souvent
     public void subirDegats(int degats) {
         if (this.getPv()-degats < 0) {
             this.setPv(0);

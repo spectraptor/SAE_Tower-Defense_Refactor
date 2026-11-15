@@ -13,6 +13,8 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
  * l'apparition de tous les élements du jeu (base, terrain, liste d'ennemis, liste de batiments).
  */
 public class Environnement {
+    private final static int ARGENT_DEBUT = 500;
+    private static Environnement instanceEnvironnement = null;
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Batiment> batiments;
     private ObservableList<Projectile> projectiles;
@@ -24,7 +26,7 @@ public class Environnement {
     private SimpleIntegerProperty argentProperty;
 
 
-    public Environnement(int niveau) {
+    private Environnement(int niveau) {
         this.ennemis = FXCollections.observableArrayList();
         this.batiments = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
@@ -34,7 +36,25 @@ public class Environnement {
         this.gestionVague = new GestionVague(new Niveau(this.terrainDeJeu), this, configurationEnnemi);
         this.nbTours = 0;
         this.base = new Base();
-        this.argentProperty = new SimpleIntegerProperty(500);
+        this.argentProperty = new SimpleIntegerProperty(ARGENT_DEBUT);
+    }
+
+    public static Environnement getInstanceEnvironnement(int niveau) {
+        if (instanceEnvironnement == null) {
+            instanceEnvironnement = new Environnement(niveau);
+        }
+        return instanceEnvironnement;
+    }
+
+    public void reinitialiserEnvironnement(int niveau) {
+        this.terrainDeJeu = new Terrain(niveau);
+        this.gestionVague = new GestionVague(niveau, this);
+        this.base = new Base();
+        this.nbTours = 0;
+        this.batiments.clear();
+        this.ennemis.clear();
+        this.projectiles.clear();
+        this.setArgent(ARGENT_DEBUT);
     }
 
     public Terrain getTerrainDeJeu() {
@@ -183,24 +203,24 @@ public class Environnement {
 
     public void ajouterArgent(int argent) {
         if (argent > 0)
-            this.argentProperty.setValue(getArgent() + argent);
+            this.setArgent(this.getArgent() + argent);
     }
 
     public void retirerArgent(int argent) {
         if (argent > 0)
-            this.argentProperty.setValue(getArgent() - argent);
+            this.setArgent(this.getArgent() - argent);
     }
 
     public void acheterBatiment(Batiment batiment) {
         if(this.transactionEstPossible(batiment.getPrix())) {
             this.ajouterBatiment(batiment);
-            this.setArgent(this.getArgent() - batiment.getPrix());
+            this.retirerArgent(batiment.getPrix());
         }
     }
 
     public void vendreBatiment(Batiment batiment) {
         this.getBatiments().remove(batiment);
-        this.setArgent(this.getArgent() + batiment.avoirPrixVente());
+        this.ajouterArgent(batiment.avoirPrixVente());
     }
 
     public boolean transactionEstPossible(int coutTransaction) {

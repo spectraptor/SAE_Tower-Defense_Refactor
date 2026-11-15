@@ -16,20 +16,25 @@ public class BombeLogique extends BatimentTir {
     }
 
     @Override
-    public Projectile choisirProjectile(Ennemi cible) {
-        Projectile projectile =  new MissileZone(this.getX(),this.getY(),this.getDegat(),cible.getX(),cible.getY(),this.getEnvironnement());;
-        switch(this.getNiveau()) {
+    public Projectile avoirProjectileAdapte(Ennemi cible) {
+        return new MissileZone(this.getX(),this.getY(),this.getDegat(),cible.getX(),cible.getY(),this.getEnvironnement());
+    }
+
+    @Override
+    public double choisirAmeliorationVitesse() {
+        double multiplicateurVitesse = 1;
+        switch (this.getNiveau()) {
             case 2:
-                projectile.setVitesse((int) (projectile.getVitesse() * 1.3));
+                multiplicateurVitesse = 1.3;
                 break;
             case 3:
-                projectile.setVitesse( (projectile.getVitesse() * 2));
+                multiplicateurVitesse = 2;
                 break;
             case 4:
-                projectile.setVitesse(projectile.getVitesse() * 3);
+                multiplicateurVitesse = 3;
                 break;
         }
-        return projectile;
+        return multiplicateurVitesse;
     }
 
     @Override

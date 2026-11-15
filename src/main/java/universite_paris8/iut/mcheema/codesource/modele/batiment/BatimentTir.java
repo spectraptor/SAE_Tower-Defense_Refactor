@@ -52,7 +52,9 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     @Override
     public void appliquerAmeliorations() {
         super.appliquerAmeliorations();
-        this.cadenceTir = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
+        int nouvelleCadence = (int)(this.cadenceTir * (1 - this.tauxAmeliorationParNiveau()));
+        if (cadenceEstModifiable(nouvelleCadence))
+            this.cadenceTir = nouvelleCadence;
     }
   
     public abstract boolean peutAttaquer(Ennemi cible);
@@ -61,7 +63,14 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         return this.getEnvironnement().getNbTours() % (int) this.getCadenceTir() == 0;
     }
 
-    public abstract Projectile choisirProjectile(Ennemi cible);
+
+    public Projectile choisirProjectile(Ennemi cible) {
+        Projectile projectile =  this.avoirProjectileAdapte(cible);
+        double multiplicateur = this.choisirAmeliorationVitesse();
+        projectile.setVitesse((int) (projectile.getVitesse() * multiplicateur));
+        return projectile;
+    }
+
 
     public static boolean cadenceEstModifiable(double nouvelleCadence) {
         return nouvelleCadence >= MIN_CADENCE_LIMITE && nouvelleCadence <= MAX_CADENCE_LIMITE;
@@ -76,4 +85,10 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     public boolean possedeCadenceTir() {
         return true;
     }
+    
+    
+
+    public abstract double choisirAmeliorationVitesse();
+    
+    public abstract Projectile avoirProjectileAdapte(Ennemi cible);
 }
