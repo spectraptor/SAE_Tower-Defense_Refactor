@@ -33,6 +33,9 @@ public abstract class EnnemiVolant extends Ennemi {
             this.setX(this.getX() + vUnitX * this.getVitesse());
             this.setY(this.getY() + vUnitY * this.getVitesse());
         }
+
+    public boolean estVolant() {
+        return true;
     }
 
 }

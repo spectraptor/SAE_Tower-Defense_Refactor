@@ -31,7 +31,7 @@
                </HBox.margin>
                <Image url="@texture/batiments/compilateur.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="Compilateur" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="COMPILATEUR" onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="Compilateur" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -48,7 +48,7 @@
                </HBox.margin>
                <Image url="@texture/batiments/cloud.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="Cloud" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="CLOUD" onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="Cloud" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -65,7 +65,7 @@
                </HBox.margin>
                <Image url="@texture/batiments/debugger.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="Debugger" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="DEBUGGER" onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="Debugger" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -86,7 +86,8 @@
                </HBox.margin>
                <Image url="@texture/batiments/bombeLogique.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="Bombe Logique" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="BOMBE_LOGIQUE"
+                    onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="Bombe Logique" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -103,7 +104,7 @@
                </HBox.margin>
                <Image url="@texture/batiments/surcadence.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="Surcadence" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="SURCADENCE" onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="Surcadence" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -124,7 +125,7 @@
                </HBox.margin>
                <Image url="@texture/batiments/ram.png" />
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#choisirBouton" prefHeight="55.0" prefWidth="140.0" text="RAM" textFill="WHITE">
+            <Button mnemonicParsing="false" fx:id="RAM" onAction="#choisirBatiment" prefHeight="55.0" prefWidth="140.0" text="RAM" textFill="WHITE">
                <HBox.margin>
                   <Insets left="5.0" right="3.0" />
                </HBox.margin>
@@ -153,7 +154,7 @@
       </VBox>
    </left>
    <center>
-      <Pane fx:id="paneJeu" onMouseClicked="#ajouterTour" prefHeight="480.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="paneJeu" onMouseClicked="#ajouterBatiment" prefHeight="480.0" prefWidth="640.0" BorderPane.alignment="CENTER">
          <TilePane fx:id="tilePane" prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: #1e1f22;" />
          <Pane fx:id="menuPause" layoutX="168.0" layoutY="158.0" prefHeight="159.0" prefWidth="318.0" visible="false">
             <HBox layoutX="7.0" layoutY="19.0" prefHeight="125.0" prefWidth="305.0">
