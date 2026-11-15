@@ -139,6 +139,22 @@ public abstract class Ennemi extends Entite {
         return false;
     }
 
+    /**
+     * retourne faux par défaut et pour devenir volant, il faut @Override la méthode
+     */
+
+    public boolean estVolant() {
+        return false;
+    }
+
+    /**
+     * retourne faux par défaut et pour devenir cammouflé, il faut @Override la méthode
+     */
+
+    public boolean estCamoufle() {
+        return false;
+    }
+
     public String toString() {
         return "ID de l'ennemi : " + this.getId() +
                 "\nPV de l'ennemi : " + this.getPv() +
