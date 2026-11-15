@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * C'est un ennemi camouflé qui ne peut pas se faire attaquer par certains bâtiments (bombe logique, compilateur, cloud)
  */
 
-public class ChevalDeTroie extends EnnemiCammoufle {
+public class ChevalDeTroie extends EnnemiCamoufle {
 
     public ChevalDeTroie(Environnement env, ArrayList<Point> chemin) {super(2, 1, 25, env, chemin);}
 
