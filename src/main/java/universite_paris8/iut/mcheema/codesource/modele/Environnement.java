@@ -16,6 +16,7 @@ public class Environnement {
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Batiment> batiments;
     private ObservableList<Projectile> projectiles;
+    private FabriqueBatiment fabriqueBatiment;
     private GestionVague gestionVague;
     private Terrain terrainDeJeu;
     private int nbTours;
@@ -28,7 +29,9 @@ public class Environnement {
         this.batiments = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.terrainDeJeu = new Terrain(niveau);
-        this.gestionVague = new GestionVague(niveau, this);
+        FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemi(this);
+        ConfigurationEnnemi configurationEnnemi = new ConfigurationEnnemi(fabriqueEnnemi);
+        this.gestionVague = new GestionVague(new Niveau(this.terrainDeJeu), this, configurationEnnemi);
         this.nbTours = 0;
         this.base = new Base();
         this.argentProperty = new SimpleIntegerProperty(500);
@@ -77,28 +80,37 @@ public class Environnement {
     public void unTour() {
         if (!this.partieEstFinie()) {
             this.gestionVague.mettreAJour();
-
-            for (int i = this.getEnnemis().size() - 1; i >= 0; i--) {
-                if (this.getNbTours() % 5 == 0) {
-                    if (this.getEnnemis().get(i).estVivant()) {
-                        this.getEnnemis().get(i).effectueAction();
-                    } else {
-                        this.getEnnemis().remove(i);
-                    }
-                }
-            }
-
-            for (int i = this.getBatiments().size() - 1; i >= 0; i--) {
-                this.getBatiments().get(i).effectueAction();
-            }
-
-            for (int i = this.getProjectiles().size() - 1; i >= 0; i--) {
-                this.getProjectiles().get(i).effectueAction();
-                if (this.getProjectiles().get(i).getEstArrive()) {
-                    this.getProjectiles().remove(i);
-                }
-            }
+            this.actionsEnnemis();
+            this.actionBatiments();
+            this.actionProjectiles();
             this.nbTours++;
+        }
+    }
+
+    private void actionsEnnemis() {
+        for (int i = this.getEnnemis().size() - 1; i >= 0; i--) {
+            if (this.getNbTours() % 5 == 0) {
+                if (this.getEnnemis().get(i).estVivant()) {
+                    this.getEnnemis().get(i).effectueAction();
+                } else {
+                    this.getEnnemis().remove(i);
+                }
+            }
+        }
+    }
+
+    private void actionBatiments() {
+        for (int i = this.getBatiments().size() - 1; i >= 0; i--) {
+            this.getBatiments().get(i).effectueAction();
+        }
+    }
+
+    private void actionProjectiles() {
+        for (int i = this.getProjectiles().size() - 1; i >= 0; i--) {
+            this.getProjectiles().get(i).effectueAction();
+            if (this.getProjectiles().get(i).getEstArrive()) {
+                this.getProjectiles().remove(i);
+            }
         }
     }
 
@@ -143,44 +155,20 @@ public class Environnement {
      *
      * @param x      l'abscisse du batiment
      * @param y      l'ordonnée du batiment
-     * @param numBat le type de batiment à poser
      * @return le batiment à poser
      */
-    public void poserBatiment(int x, int y, int numBat) {
-        Batiment batimentAPoser = null;
+    public void poserBatiment(int x, int y, TypeBatiment typeBatiment) {
         int[] tabLigneColonneBatCentre = this.terrainDeJeu.mettreCoordsSurCentreTuile(x, y);
 
         if (this.peutConstruireBatiment(x, y)) {
-            switch (numBat) {
-                case 1:
-                    batimentAPoser = new Compilateur(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-                case 2:
-                    batimentAPoser = new Cloud(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-                case 3:
-                    batimentAPoser = new Debugger(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-                case 4:
-                    batimentAPoser = new BombeLogique(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-                case 5:
-                    batimentAPoser = new Surcadence(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-                case 6:
-                    batimentAPoser = new RAM(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], this);
-                    break;
-            }
-
-            this.acheterBatiment(batimentAPoser);
+            Batiment batimentPose = fabriqueBatiment.creerBatiment(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], typeBatiment);
+            this.acheterBatiment(batimentPose);
         }
     }
 
 
     public boolean partieEstFinie() {
-        return this.getBase().estDetruite() || (this.gestionVague.getNumVagueCourante() ==
-                this.gestionVague.getNbreVagues() - 1 && this.ennemis.isEmpty() && this.gestionVague.
-                getVagues()[this.gestionVague.getNumVagueCourante()].getlisteEnnemisVague().isEmpty());
+        return this.getBase().estDetruite() || this.gestionVague.derniereVagueEstTerminee();
     }
 
     public int getNbTours() {
