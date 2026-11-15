@@ -77,28 +77,37 @@ public class Environnement {
     public void unTour() {
         if (!this.partieEstFinie()) {
             this.gestionVague.mettreAJour();
-
-            for (int i = this.getEnnemis().size() - 1; i >= 0; i--) {
-                if (this.getNbTours() % 5 == 0) {
-                    if (this.getEnnemis().get(i).estVivant()) {
-                        this.getEnnemis().get(i).effectueAction();
-                    } else {
-                        this.getEnnemis().remove(i);
-                    }
-                }
-            }
-
-            for (int i = this.getBatiments().size() - 1; i >= 0; i--) {
-                this.getBatiments().get(i).effectueAction();
-            }
-
-            for (int i = this.getProjectiles().size() - 1; i >= 0; i--) {
-                this.getProjectiles().get(i).effectueAction();
-                if (this.getProjectiles().get(i).getEstArrive()) {
-                    this.getProjectiles().remove(i);
-                }
-            }
+            this.actionsEnnemis();
+            this.actionBatiments();
+            this.actionProjectiles();
             this.nbTours++;
+        }
+    }
+
+    private void actionsEnnemis() {
+        for (int i = this.getEnnemis().size() - 1; i >= 0; i--) {
+            if (this.getNbTours() % 5 == 0) {
+                if (this.getEnnemis().get(i).estVivant()) {
+                    this.getEnnemis().get(i).effectueAction();
+                } else {
+                    this.getEnnemis().remove(i);
+                }
+            }
+        }
+    }
+
+    private void actionBatiments() {
+        for (int i = this.getBatiments().size() - 1; i >= 0; i--) {
+            this.getBatiments().get(i).effectueAction();
+        }
+    }
+
+    private void actionProjectiles() {
+        for (int i = this.getProjectiles().size() - 1; i >= 0; i--) {
+            this.getProjectiles().get(i).effectueAction();
+            if (this.getProjectiles().get(i).getEstArrive()) {
+                this.getProjectiles().remove(i);
+            }
         }
     }
 
