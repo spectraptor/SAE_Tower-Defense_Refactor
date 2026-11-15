@@ -68,8 +68,8 @@ public abstract class Ennemi extends Entite {
         this.chemin = chemin;
         if (chemin != null && !chemin.isEmpty()) {
             Point depart = chemin.get(0);
-            this.setX(depart.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
-            this.setY(depart.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
+            this.setX(depart.getCentreX());
+            this.setY(depart.getCentreY());
         }
     }
 
@@ -95,8 +95,8 @@ public abstract class Ennemi extends Entite {
   
     public void seDeplace() {
             Point prochaine = this.chemin.get(this.indiceChemin + 1);
-            int cibleX = prochaine.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2;
-            int cibleY = prochaine.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2;
+            int cibleX = prochaine.getCentreX();
+            int cibleY = prochaine.getCentreY();
 
             double diffX = cibleX - this.getX();
             double diffY = cibleY - this.getY();
