@@ -14,8 +14,8 @@ public abstract class EnnemiVolant extends Ennemi {
     @Override
     public void seDeplace() {
         Point base = this.getChemin().get(this.getChemin().size() -1);
-        double xBase = base.avoirXPixels();
-        double yBase = base.avoirYPixels();
+        double xBase = base.getCentreX();
+        double yBase = base.getCentreY();
         double distX = xBase - this.getX();
         double distY = yBase - this.getY();
         this.verifieProchainMouvement(distX,distY);
@@ -24,15 +24,15 @@ public abstract class EnnemiVolant extends Ennemi {
 
     public void verifieProchainMouvement(double distX,double distY) {
         double distance = Math.sqrt(distX * distX + distY * distY);
-        if(distance <= this.getVitesse()) {
-            this.setIndiceChemin(this.getChemin().size()-1);
-        }
-        else {
+        if (distance <= this.getVitesse()) {
+            this.setIndiceChemin(this.getChemin().size() - 1);
+        } else {
             double vUnitX = distX / distance;
             double vUnitY = distY / distance;
             this.setX(this.getX() + vUnitX * this.getVitesse());
             this.setY(this.getY() + vUnitY * this.getVitesse());
         }
+    }
 
     public boolean estVolant() {
         return true;
