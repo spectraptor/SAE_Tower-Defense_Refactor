@@ -182,6 +182,6 @@ public class GestionVague {
     public boolean derniereVagueEstTerminee() {
         return this.getNumVagueCourante() == this.getNbreVagues() - 1
                 && this.environnement.getEnnemis().isEmpty()
-                && this.listeEnnemisVagueCourante().isEmpty();
+                && this.avoirEnnemisVagueCourante().isEmpty();
     }
 }
