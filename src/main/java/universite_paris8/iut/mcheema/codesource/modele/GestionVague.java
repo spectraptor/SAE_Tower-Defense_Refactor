@@ -184,4 +184,6 @@ public class GestionVague {
                 && this.environnement.getEnnemis().isEmpty()
                 && this.avoirEnnemisVagueCourante().isEmpty();
     }
+
+
 }
