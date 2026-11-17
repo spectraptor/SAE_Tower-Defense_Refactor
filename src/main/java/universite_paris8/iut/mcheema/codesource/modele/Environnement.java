@@ -14,15 +14,22 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
  */
 public class Environnement {
     private final static int ARGENT_DEBUT = 500;
+
     private static Environnement instanceEnvironnement = null;
+
     private ObservableList<Ennemi> ennemis;
     private ObservableList<Batiment> batiments;
     private ObservableList<Projectile> projectiles;
+
     private FabriqueBatiment fabriqueBatiment;
+    private FabriqueEnnemi fabriqueEnnemi;
+    private ConfigurationEnnemi configurationEnnemi;
+
     private GestionVague gestionVague;
     private Terrain terrainDeJeu;
     private int nbTours;
     private Base base;
+
     private SimpleIntegerProperty argentProperty;
 
 
@@ -31,8 +38,9 @@ public class Environnement {
         this.batiments = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
         this.terrainDeJeu = new Terrain(niveau);
-        FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemi(this);
-        ConfigurationEnnemi configurationEnnemi = new ConfigurationEnnemi(fabriqueEnnemi);
+        this.fabriqueBatiment = new FabriqueBatiment(this);
+        this.fabriqueEnnemi = new FabriqueEnnemi(this);
+        this.configurationEnnemi = new ConfigurationEnnemi(this.fabriqueEnnemi);
         this.gestionVague = new GestionVague(new Niveau(this.terrainDeJeu), this, configurationEnnemi);
         this.nbTours = 0;
         this.base = new Base();
@@ -48,8 +56,6 @@ public class Environnement {
 
     public void reinitialiserEnvironnement(int niveau) {
         this.terrainDeJeu = new Terrain(niveau);
-        FabriqueEnnemi fabriqueEnnemi = new FabriqueEnnemi(this);
-        ConfigurationEnnemi configurationEnnemi = new ConfigurationEnnemi(fabriqueEnnemi);
         this.gestionVague = new GestionVague(new Niveau(this.terrainDeJeu), this, configurationEnnemi);
         this.base = new Base();
         this.nbTours = 0;
@@ -183,7 +189,7 @@ public class Environnement {
         int[] tabLigneColonneBatCentre = this.terrainDeJeu.mettreCoordsSurCentreTuile(x, y);
 
         if (this.peutConstruireBatiment(x, y)) {
-            Batiment batimentPose = fabriqueBatiment.creerBatiment(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], typeBatiment);
+            Batiment batimentPose = this.fabriqueBatiment.creerBatiment(tabLigneColonneBatCentre[1], tabLigneColonneBatCentre[0], typeBatiment);
             this.acheterBatiment(batimentPose);
         }
     }
