@@ -10,11 +10,13 @@ public abstract class BatimentTir extends BatimentAvecPortee{
     public final static int MAX_CADENCE_LIMITE = 3000;
     private double cadenceTir;
     private int degat;
+    private StrategieCiblage strategieCiblage;
 
-    public BatimentTir(String nom , double x, double y, int portee, int degat, int prix, double cTir, Environnement env) {
+    public BatimentTir(String nom , double x, double y, int portee, int degat, int prix, double cTir, Environnement env, StrategieCiblage strategieCiblage) {
         super(nom,x, y, portee, prix, 4, env);
         this.cadenceTir = cTir;
         this.degat = degat;
+        this.strategieCiblage = strategieCiblage;
     }
 
     public void setCadenceTir(double cadenceTir) {
@@ -56,8 +58,10 @@ public abstract class BatimentTir extends BatimentAvecPortee{
         if (cadenceEstModifiable(nouvelleCadence))
             this.cadenceTir = nouvelleCadence;
     }
-  
-    public abstract boolean peutAttaquer(Ennemi cible);
+
+    public boolean peutAttaquer(Ennemi cible) {
+        return this.strategieCiblage.peutAttaquer(cible);
+    }
 
     public boolean estCapableDeTirer() {
         return this.getEnvironnement().getNbTours() % (int) this.getCadenceTir() == 0;

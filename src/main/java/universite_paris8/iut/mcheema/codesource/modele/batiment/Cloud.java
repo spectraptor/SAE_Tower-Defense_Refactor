@@ -8,13 +8,7 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 
 public class Cloud extends BatimentTir {
     public Cloud(double x, double y, Environnement env) {
-        super("Cloud", x, y, 50, 1, 150, 100, env);
-    }
-
-
-    @Override
-    public boolean peutAttaquer(Ennemi cible) {
-        return !cible.estCamoufle();
+        super("Cloud", x, y, 50, 1, 150, 100, env, new SansCamoufle());
     }
 
     @Override

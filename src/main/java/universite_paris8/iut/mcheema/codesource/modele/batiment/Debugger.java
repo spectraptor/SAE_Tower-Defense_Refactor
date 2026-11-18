@@ -14,9 +14,8 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
 public class Debugger extends BatimentTir {
 
     public Debugger(double x, double y, Environnement env) {
-        super("Debugger",x, y, 200,2, 150,500, env);
+        super("Debugger",x, y, 200,2, 150,500, env, new SansVolant());
     }
-
 
     @Override
     public Projectile avoirProjectileAdapte(Ennemi cible) {

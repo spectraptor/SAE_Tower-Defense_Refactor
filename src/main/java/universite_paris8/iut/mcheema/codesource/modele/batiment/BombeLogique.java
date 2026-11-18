@@ -6,13 +6,7 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.*;
 
 public class BombeLogique extends BatimentTir {
     public BombeLogique(double x, double y, Environnement env) {
-        super("Bombe Logique", x, y, 100,3, 500,550, env);
-    }
-
-
-    @Override
-    public boolean peutAttaquer(Ennemi cible) {
-        return !cible.estVolant() && !cible.estCamoufle();
+        super("Bombe Logique", x, y, 100,3, 500,550, env, new CiblageCombine(new SansVolant(), new SansCamoufle()));
     }
 
     @Override

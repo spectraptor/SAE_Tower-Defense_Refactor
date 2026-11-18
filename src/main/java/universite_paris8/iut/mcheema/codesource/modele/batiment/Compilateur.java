@@ -13,9 +13,8 @@ import universite_paris8.iut.mcheema.codesource.modele.projectile.Projectile;
  */
 public class Compilateur extends BatimentTir {
     public Compilateur(double x, double y, Environnement env) {
-        super("Compilateur",x, y, 100,1, 100,200, env);
+        super("Compilateur",x, y, 100,1, 100,200, env, new CiblageCombine(new SansVolant(), new SansCamoufle()));
     }
-
 
     @Override
     public Projectile avoirProjectileAdapte(Ennemi cible) {
@@ -37,11 +36,6 @@ public class Compilateur extends BatimentTir {
                 break;
         }
         return multiplicateurVitesse;
-    }
-
-    @Override
-    public boolean peutAttaquer(Ennemi cible) {
-        return !cible.estVolant() && !cible.estCamoufle();
     }
 
 }
