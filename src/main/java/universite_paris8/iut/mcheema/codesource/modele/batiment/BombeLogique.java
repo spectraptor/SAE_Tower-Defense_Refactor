@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class BombeLogique extends BatimentTir {
     public BombeLogique(double x, double y, Environnement env) {
-        super("Bombe Logique", x, y, 100,3, 500,550, env, new CiblageCombine(new ArrayList<>(Arrays.asList(new SansVolant(), new SansCamoufle()))));
+        super("Bombe Logique", x, y, 100,3, 500,550, env, new CiblageCombine().ajouter(new SansVolant()).ajouter(new SansCamoufle()));
     }
 
     @Override

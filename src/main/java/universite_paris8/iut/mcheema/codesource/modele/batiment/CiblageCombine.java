@@ -8,8 +8,13 @@ public class CiblageCombine implements StrategieCiblage {
 
     private ArrayList<StrategieCiblage> strategies;
 
-    public CiblageCombine(ArrayList<StrategieCiblage> strategies) {
-        this.strategies = strategies;
+    public CiblageCombine() {
+        this.strategies = new ArrayList<>();
+    }
+
+    public CiblageCombine ajouter(StrategieCiblage strategie) {
+        this.strategies.add(strategie);
+        return this;
     }
 
     @Override

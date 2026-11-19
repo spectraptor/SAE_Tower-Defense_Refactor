@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 public class Compilateur extends BatimentTir {
     public Compilateur(double x, double y, Environnement env) {
-        super("Compilateur",x, y, 100,1, 100,200, env, new CiblageCombine(new ArrayList<>(Arrays.asList(new SansVolant(), new SansCamoufle()))));
+        super("Compilateur",x, y, 100,1, 100,200, env, new CiblageCombine().ajouter(new SansVolant()).ajouter(new SansCamoufle()));
     }
 
     @Override
