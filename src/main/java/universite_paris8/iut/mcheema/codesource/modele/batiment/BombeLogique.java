@@ -4,9 +4,12 @@ import universite_paris8.iut.mcheema.codesource.modele.Environnement;
 import universite_paris8.iut.mcheema.codesource.modele.ennemi.Ennemi;
 import universite_paris8.iut.mcheema.codesource.modele.projectile.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class BombeLogique extends BatimentTir {
     public BombeLogique(double x, double y, Environnement env) {
-        super("Bombe Logique", x, y, 100,3, 500,550, env, new CiblageCombine(new SansVolant(), new SansCamoufle()));
+        super("Bombe Logique", x, y, 100,3, 500,550, env, new CiblageCombine(new ArrayList<>(Arrays.asList(new SansVolant(), new SansCamoufle()))));
     }
 
     @Override
