@@ -9,4 +9,9 @@ import java.util.ArrayList;
  */
 public class ErreurDeLogique extends EnnemiArmure {
     public ErreurDeLogique(Environnement env, ArrayList<Point> chemin) {super(50, 1, 250, env, chemin,3);}
+
+    @Override
+    public boolean estUnBoss() {
+        return true;
+    }
 }

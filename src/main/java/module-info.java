@@ -7,9 +7,12 @@ module universite_paris8.iut.mcheema.codesource {
     requires java.desktop;
     requires java.sql;
     requires jdk.compiler;
+    requires javafx.base;
 
     opens universite_paris8.iut.mcheema.codesource to javafx.fxml;
     exports universite_paris8.iut.mcheema.codesource;
     exports universite_paris8.iut.mcheema.codesource.controleur;
     opens universite_paris8.iut.mcheema.codesource.controleur to javafx.fxml;
+    exports universite_paris8.iut.mcheema.codesource.modele;
+    opens universite_paris8.iut.mcheema.codesource.modele to javafx.fxml;
 }

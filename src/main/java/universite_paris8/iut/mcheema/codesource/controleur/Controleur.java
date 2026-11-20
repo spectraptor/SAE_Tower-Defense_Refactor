@@ -23,7 +23,6 @@ import universite_paris8.iut.mcheema.codesource.controleur.listeners.Observateur
 import universite_paris8.iut.mcheema.codesource.controleur.listeners.ObservateurListeProjectiles;
 import universite_paris8.iut.mcheema.codesource.modele.*;
 import javafx.util.Duration;
-import universite_paris8.iut.mcheema.codesource.modele.ennemi.*;
 import universite_paris8.iut.mcheema.codesource.vue.SonVue;
 import universite_paris8.iut.mcheema.codesource.vue.TerrainVue;
 
@@ -47,7 +46,7 @@ public class Controleur implements Initializable {
 
     private boolean etatPause = true;
 
-    private int numBatimentSelectionne = -1;
+    private TypeBatiment typeBatimentSelectionne = null;
 
     private SonVue sonVue;
 
@@ -93,7 +92,8 @@ public class Controleur implements Initializable {
 
     public void chargerNiveau(int niveau) {
 
-        this.environnement = new Environnement(niveau);
+        this.environnement = Environnement.getInstanceEnvironnement(niveau);
+        this.environnement.reinitialiserEnvironnement(niveau);
 
         this.labelVieBase.textProperty().bind(this.environnement.getBase().pvProperty().asString());
         this.labelArgent.textProperty().bind(this.environnement.argentProperty().asString());
@@ -137,40 +137,20 @@ public class Controleur implements Initializable {
     }
 
     @FXML
-    public void ajouterTour(MouseEvent mouseEvent) {
+    public void ajouterBatiment(MouseEvent mouseEvent) {
         int coordsSourisX = (int) mouseEvent.getX();
         int coordsSourisY = (int) mouseEvent.getY();
 
-        if (this.numBatimentSelectionne != -1) {
-            this.environnement.poserBatiment(coordsSourisX, coordsSourisY, this.numBatimentSelectionne);
-            this.numBatimentSelectionne = -1;
+        if (this.typeBatimentSelectionne != null) {
+            this.environnement.poserBatiment(coordsSourisX, coordsSourisY, this.typeBatimentSelectionne);
+            this.typeBatimentSelectionne = null;
         }
     }
 
     @FXML
-    public void choisirBouton(ActionEvent actionEvent) {
+    public void choisirBatiment(ActionEvent actionEvent) {
         Button bouton = (Button) actionEvent.getSource();
-
-        switch(bouton.getText()) {
-            case "Compilateur":
-                this.numBatimentSelectionne = 1;
-                break;
-            case "Cloud":
-                this.numBatimentSelectionne = 2;
-                break;
-            case "Debugger":
-                this.numBatimentSelectionne = 3;
-                break;
-            case "Bombe Logique":
-                this.numBatimentSelectionne = 4;
-                break;
-            case "Surcadence":
-                this.numBatimentSelectionne = 5;
-                break;
-            case "RAM":
-                this.numBatimentSelectionne = 6;
-                break;
-        }
+        typeBatimentSelectionne = TypeBatiment.valueOf(bouton.getId());
     }
 
     @FXML
@@ -186,13 +166,11 @@ public class Controleur implements Initializable {
         if (etatRapide) {
             gameLoop.setRate(1);
             etatRapide = false;
-            System.out.println("Jeu mis en x1");
 
         }
         else {
             gameLoop.setRate(2);
             etatRapide = true;
-            System.out.println("Jeu mis en x2");
         }
     }
 

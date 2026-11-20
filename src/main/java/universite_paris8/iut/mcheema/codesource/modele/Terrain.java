@@ -1,5 +1,9 @@
 package universite_paris8.iut.mcheema.codesource.modele;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,82 +21,41 @@ public class Terrain {
         this.initialiseTerrain();
     }
 
-    public void initialiseTerrain() {
-        /*
-        h = sol
-        e = glitch1 --
-        c = glitch2 /-
-        d = glitch3 -\
-        f = glitch4 \-
-        g = glitch5 -/
-        1 = ch_gauche_droite  →
-        2 = ch_haut_bas ↓
-        3 = ch_droite_bas ↱
-        4 = ch_bas_gauche ↴
-        5 = ch_gauche_haut ↲
-        6 = ch_haut_droite ↳
-        7 = ch_haut_droite_bas
-        8 = ch_droite_bas_gauche
-        9 = ch_bas_gauche_haut
-        0 = ch_gauche_haut_droite
-        b = base
-         */
-        switch (this.niveauTerrain) {
-            case 1:
-                this.terrainDeJeu = new char[][]{{'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','c','h','h','h','d','e','e','c','h','h','h','h','d','e','e'},
-                                                 {'e','e','e','e','e','h','h','h','h','h','d','3','1','1','4','h','h','h','h','h'},
-                                                 {'e','e','e','e','c','h','h','h','h','h','h','2','h','h','2','h','h','3','1','1'},
-                                                 {'e','e','e','c','h','h','h','h','h','h','h','2','h','h','2','h','h','2','h','h'},
-                                                 {'e','3','1','1','1','1','1','1','1','4','e','2','e','f','6','1','1','5','g','e'},
-                                                 {'e','2','h','h','h','h','d','e','e','2','e','2','e','e','f','h','h','h','e','e'},
-                                                 {'h','2','h','3','1','1','4','d','e','2','e','2','e','e','e','f','h','h','e','e'},
-                                                 {'h','2','h','2','h','h','2','h','d','2','e','6','1','1','1','1','1','4','e','e'},
-                                                 {'h','6','1','5','h','h','2','h','h','2','h','h','h','h','h','h','h','2','e','e'},
-                                                 {'h','h','h','h','h','h','2','h','h','2','h','h','h','h','h','h','h','2','e','e'},
-                                                 {'b','1','1','1','1','1','5','h','h','6','1','1','1','1','1','1','1','5','e','e'},
-                                                 {'h','h','h','h','h','h','h','h','h','h','h','h','h','h','h','g','e','e','e','e'},
-                                                 {'h','h','h','h','h','h','h','h','h','h','h','h','h','g','e','e','e','e','e','e'}
-                };
-                break;
-            case 2:
-                this.terrainDeJeu = new char[][]{{'d','e','e','e','e','e','e','e','e','e','e','e','e','e','e','2','e','e','e','c'},
-                                                 {'h','h','h','h','h','h','h','h','g','e','e','c','h','h','h','2','h','h','h','h'},
-                                                 {'h','h','h','h','h','3','1','1','1','1','1','1','1','4','h','2','h','h','h','h'},
-                                                 {'h','3','1','1','1','5','g','e','e','c','h','h','h','2','h','6','1','1','4','h'},
-                                                 {'h','2','h','h','h','g','e','3','1','1','1','1','1','5','h','h','h','h','2','h'},
-                                                 {'h','2','h','3','1','4','e','2','e','h','h','h','h','h','h','h','h','h','2','h'},
-                                                 {'h','2','h','2','h','2','e','2','e','h','h','3','1','1','1','1','1','1','5','h'},
-                                                 {'b','5','h','2','h','2','d','6','1','4','h','2','h','h','h','h','h','h','h','h'},
-                                                 {'h','h','h','2','h','6','4','e','e','6','1','5','h','3','1','1','1','1','4','h'},
-                                                 {'h','h','h','2','h','h','2','e','e','h','h','h','h','2','h','h','h','h','2','h'},
-                                                 {'h','h','h','2','h','h','6','1','1','1','1','1','1','5','h','3','1','1','5','h'},
-                                                 {'b','1','1','5','h','h','h','e','e','f','h','h','h','h','h','2','h','h','h','h'},
-                                                 {'h','h','h','h','h','h','h','e','e','e','f','h','h','3','1','5','h','h','h','h'},
-                                                 {'h','h','h','h','h','h','g','e','e','e','e','f','h','2','h','h','h','h','h','h'},
-                                                 {'h','h','h','h','h','g','e','e','e','e','e','e','h','2','h','h','h','h','h','h'}
-                };
-                break;
-            case 3:
-                this.terrainDeJeu = new char[][]{{'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','c','h','h','h','h','h','h','h','h','h','d','e','e','e','e','e','e','e'},
-                                                 {'e','e','h','h','3','1','1','1','1','1','4','h','h','d','e','e','e','e','e','e'},
-                                                 {'e','e','h','3','5','h','h','h','h','h','6','4','h','h','h','d','e','e','e','e'},
-                                                 {'e','e','h','2','h','h','h','h','h','h','h','6','4','h','h','h','h','h','d','e'},
-                                                 {'e','e','h','7','1','1','1','1','1','b','h','h','7','1','1','1','1','1','1','1'},
-                                                 {'e','e','h','2','h','h','h','h','h','h','h','3','5','h','h','h','h','h','g','e'},
-                                                 {'e','e','h','6','4','h','h','h','h','h','3','5','h','h','h','g','e','e','e','e'},
-                                                 {'e','e','h','h','6','1','1','1','1','1','5','h','h','g','e','e','e','e','e','e'},
-                                                 {'e','e','f','h','h','h','h','h','h','h','h','h','g','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
-                                                 {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'}};
-                break;
-        }
+    public String avoirCheminTerrain() {
+        return "src/main/resources/universite_paris8/iut/mcheema/codesource/terrains/terrain" + this.niveauTerrain + ".txt";
     }
+
+
+    public ArrayList<String> lireLigneFichier(String chemin) {
+        ArrayList<String> lignes = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(chemin))) {
+            String ligne;
+            while ((ligne = reader.readLine()) != null) {
+                lignes.add(ligne);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lignes;
+    }
+
+    public char[][] construireGrilleTerrain(ArrayList<String> lignesTerrain) {
+
+        char[][] tab = new char[lignesTerrain.size()][];
+        for (int i = 0; i < lignesTerrain.size(); i++) {
+            tab[i] = lignesTerrain.get(i).toCharArray();
+        }
+
+        return tab;
+    }
+
+    public void initialiseTerrain() {
+        String cheminTerrain = this.avoirCheminTerrain();
+        ArrayList<String> lignesTerrain = this.lireLigneFichier(cheminTerrain);
+        this.terrainDeJeu = this.construireGrilleTerrain(lignesTerrain);
+    }
+
 
     public int obtenirHauteur() {
         return this.terrainDeJeu.length;
@@ -102,10 +65,37 @@ public class Terrain {
         return this.terrainDeJeu[0].length;
     }
 
-    public char avoirCodeTuile(int i, int j) {
-        return this.terrainDeJeu[i][j];
+    public char avoirCodeTuile(int ligne, int colonne) {
+        return this.terrainDeJeu[ligne][colonne];
     }
 
+    /**
+     * Cherche les bases dans le terrain (tuiles 'b')
+     * @return la liste des points correspondant aux bases
+     */
+    public ArrayList<Point> trouverBases() {
+        return this.trouverTuiles('b');
+    }
+
+    /**
+     * Cherche les entrées des ennemis dans le terrain (tuiles 's')
+     * @return la liste des points correspondant aux entrées
+     */
+    public ArrayList<Point> trouverEntrees() {
+        return this.trouverTuiles('s');
+    }
+
+    private ArrayList<Point> trouverTuiles(char lettre) {
+        ArrayList<Point> points = new ArrayList<>();
+        for (int ligne = 0; ligne < this.obtenirHauteur(); ligne++) {
+            for (int colonne = 0; colonne < this.obtenirLargeur(); colonne++) {
+                if (this.avoirCodeTuile(ligne, colonne) == lettre) {
+                    points.add(new Point(colonne, ligne));
+                }
+            }
+        }
+        return points;
+    }
 
     /**
      * Convertis les coordoonnées x et y en numéro de ligne et colonne de la tuile.
@@ -125,7 +115,7 @@ public class Terrain {
         return tuile;
     }
 
-    public boolean estDansTerrain(int nCol, int nLigne) {
+    public boolean estDansTerrain(int nLigne, int nCol) {
         return nCol >= 0 && nCol < obtenirLargeur() && nLigne >= 0 && nLigne < obtenirHauteur();
     }
 
@@ -144,7 +134,11 @@ public class Terrain {
 
         int ligne = nouveauY / TAILLE_TUILLE;
         int colonne = nouveauX / TAILLE_TUILLE;
-        return (avoirCodeTuile(ligne,colonne) >= '0' && avoirCodeTuile(ligne,colonne) <= '9') || avoirCodeTuile(ligne,colonne) == 'b';
+
+        if(!estDansTerrain(ligne,colonne)) {
+            return false;
+        }
+        return (avoirCodeTuile(ligne,colonne) >= '0' && avoirCodeTuile(ligne,colonne) <= '9') || avoirCodeTuile(ligne,colonne) == 'b' || avoirCodeTuile(ligne,colonne) == 's';
     }
 
     public boolean tuileTourPosable(int x, int y) {
@@ -174,7 +168,7 @@ public class Terrain {
         for (int[] direction : directions) {
             int nCol = t.getColonne() + direction[0];
             int nLigne = t.getLigne() + direction[1];
-            if (estDansTerrain(nCol, nLigne) && tuileEstAccessibleCoords(nCol * TAILLE_TUILLE, nLigne * TAILLE_TUILLE)) {
+            if (estDansTerrain(nLigne, nCol) && tuileEstAccessibleCoords(nCol * TAILLE_TUILLE, nLigne * TAILLE_TUILLE)) {
                 voisins.add(new Point(nCol, nLigne));
             }
         }

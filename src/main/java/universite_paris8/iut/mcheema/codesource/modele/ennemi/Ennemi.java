@@ -43,6 +43,14 @@ public abstract class Ennemi extends Entite {
         setChemin(chemin);
     }
 
+    public int getVitesse() {
+        return this.vitesse;
+    }
+
+    public void setIndiceChemin(int indice) {
+        this.indiceChemin = indice;
+    }
+
 
     public final int getPv() {
         return this.pvProperty.getValue();
@@ -54,10 +62,6 @@ public abstract class Ennemi extends Entite {
 
     public final IntegerProperty pvProperty() {
         return this.pvProperty;
-    }
-
-    public int getVitesse() {
-        return this.vitesse;
     }
 
     public boolean estVivant() {
@@ -72,17 +76,9 @@ public abstract class Ennemi extends Entite {
         this.chemin = chemin;
         if (chemin != null && !chemin.isEmpty()) {
             Point depart = chemin.get(0);
-            this.setX(depart.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
-            this.setY(depart.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2);
+            this.setX(depart.getCentreX());
+            this.setY(depart.getCentreY());
         }
-    }
-
-    public int getIndiceChemin() {
-        return this.indiceChemin;
-    }
-
-    public void setIndiceChemin(int indice) {
-        this.indiceChemin = indice;
     }
 
     public int getArgentDonne() {
@@ -107,8 +103,8 @@ public abstract class Ennemi extends Entite {
   
     public void seDeplace() {
             Point prochaine = this.chemin.get(this.indiceChemin + 1);
-            int cibleX = prochaine.getColonne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2;
-            int cibleY = prochaine.getLigne() * Terrain.TAILLE_TUILLE + Terrain.TAILLE_TUILLE/2;
+            int cibleX = prochaine.getCentreX();
+            int cibleY = prochaine.getCentreY();
 
             double diffX = cibleX - this.getX();
             double diffY = cibleY - this.getY();
@@ -145,12 +141,26 @@ public abstract class Ennemi extends Entite {
     }
 
     /**
-     * Regarde si l'ennemi présent est un boss (càd une instance de GrosBogue, ErreurDeLogique, ErreurDeSyntaxe, ou erreurExecution)
-     * @return vrai si c'est une instance d'une de ces 4 classes, faux sinon
+     * retourne faux par défaut et pour devenir un boss, il faut @Override la méthode
      */
     public boolean estUnBoss() {
-        return (this instanceof GrosBogue || this instanceof ErreurDeLogique || this
-                instanceof ErreurDeSyntaxe || this instanceof ErreurExecution);
+        return false;
+    }
+
+    /**
+     * retourne faux par défaut et pour devenir volant, il faut @Override la méthode
+     */
+
+    public boolean estVolant() {
+        return false;
+    }
+
+    /**
+     * retourne faux par défaut et pour devenir cammouflé, il faut @Override la méthode
+     */
+
+    public boolean estCamoufle() {
+        return false;
     }
 
     public String toString() {

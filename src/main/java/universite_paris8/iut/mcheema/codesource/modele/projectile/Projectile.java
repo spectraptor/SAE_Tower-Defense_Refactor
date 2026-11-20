@@ -20,9 +20,6 @@ public abstract class Projectile extends Entite {
         this.estArrive = false;
     }
 
-
-    public abstract void effectueAction();
-
     public int getVitesse() {
         return this.vitesse;
     }
@@ -35,10 +32,6 @@ public abstract class Projectile extends Entite {
         return this.degat;
     }
 
-    public void setDegat(int degat) {
-        this.degat = degat;
-    }
-
     public boolean getEstArrive() {
         return this.estArrive;
     }
@@ -47,12 +40,40 @@ public abstract class Projectile extends Entite {
         this.estArrive = estArrive;
     }
 
-    public void deplaceMissile(double distX, double distY, double distance) {
+    public void deplaceMissile(double distX, double distY) {
+        double distance = this.calculDistance(distX,distY);
         double vUnitX = distX / distance;
         double vUnitY = distY / distance;
         this.setX(this.getX() + vUnitX * this.getVitesse());
         this.setY(this.getY() + vUnitY * this.getVitesse());
     }
+
+    @Override
+    public void effectueAction() {
+        double[] difference = this.calculDifference();
+        double distX = difference[0];
+        double distY = difference[1];
+        double distance = this.calculDistance(distX,distY);
+        if(this.doitDeclencherAction(distance)) {
+            this.gererImpact();
+            this.setEstArrive(true);
+        }
+        else {
+            this.deplaceMissile(distX,distY);
+        }
+    }
+
+    public boolean doitDeclencherAction(double distance) {
+        return distance <= this.getVitesse();
+    }
+
+    public double calculDistance(double distX,double distY) {
+        return Math.sqrt(distX * distX + distY * distY);
+    }
+
+    public abstract void gererImpact();
+
+    public abstract double[] calculDifference();
 
 
 }

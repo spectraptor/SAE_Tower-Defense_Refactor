@@ -11,32 +11,24 @@ public class Niveau {
 
     private ArrayList<Point> bases;
     private ArrayList<Point> entrees;
+    private Terrain terrain;
 
-    public Niveau(int numero) {
-        this.bases = new ArrayList<>();
-        this.entrees = new ArrayList<>();
-        creer(numero);
+    public Niveau(Terrain terrain) {
+        this.bases = terrain.trouverBases();
+        this.entrees = terrain.trouverEntrees();
+        this.terrain = terrain;
     }
-    public void creer(int numero) {
 
-        switch (numero) {
-            case 1:
-                this.bases.add(new Point(0, 12));
-                this.entrees.add(new Point(19, 4));
-                break;
-
-            case 2:
-                this.bases.add(new Point(0, 7));
-                this.entrees.add(new Point(15, 0));
-                this.bases.add(new Point(0, 11));
-                this.entrees.add(new Point(13, 14));
-                break;
-            case 3:
-                this.bases.add(new Point(9, 7));
-                this.entrees.add(new Point(19, 7));
-                break;
+    public ArrayList<ArrayList<Point>> avoirTousLesChemins() {
+        ArrayList<ArrayList<Point>> chemins = new ArrayList<>();
+        for (int i = 0; i < this.bases.size(); i++) {
+            Point base = this.bases.get(i);
+            Point entree = this.entrees.get(i);
+            BFS bfs = new BFS(this.terrain, base);
+            chemins.add(bfs.cheminDepuisSource(entree));
         }
 
+        return chemins;
     }
 
     public ArrayList<Point> getBases() {

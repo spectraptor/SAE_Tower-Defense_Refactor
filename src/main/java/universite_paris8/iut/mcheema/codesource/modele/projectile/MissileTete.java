@@ -12,23 +12,15 @@ public class MissileTete extends MissileTeleguide {
 
     @Override
     public void effectueAction() {
-        double distX = this.getCible().getX() - this.getX();
-        double distY = this.getCible().getY() - this.getY();
-        double distance = Math.sqrt(distX * distX + distY * distY);
-
-        if(distance <= this.getVitesse()) {
-            this.getCible().subirDegats(this.getDegat());
-            this.setEstArrive(true);
-        }
-        else {
-            this.deplaceMissile(distX,distY,distance);
-        }
-
+        super.effectueAction();
         if(!this.getCible().estVivant()) {
-            if(this.getX() == this.getCible().getX() && this.getY() == this.getCible().getY()) {
+            if(arriveEmplacementCibleMorte()) {
                 this.setEstArrive(true);
             }
         }
     }
 
+    public boolean arriveEmplacementCibleMorte() {
+        return this.getX() == this.getCible().getX() && this.getY() == this.getCible().getY();
+    }
 }

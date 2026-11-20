@@ -29,7 +29,8 @@ public class BatimentTest {
         this.chemin = new ArrayList<>();
         this.chemin.add(new Point(1,1));
 
-        this.environnement = new Environnement(1);
+        this.environnement = Environnement.getInstanceEnvironnement(1);
+        this.environnement.reinitialiserEnvironnement(1);
 
         this.bombeLogique = new BombeLogique(0, 0, this.environnement);
         this.cloud = new Cloud(0, 0, this.environnement);

@@ -22,22 +22,21 @@ public class RAM extends Batiment {
 
     @Override
     public void effectueAction() {
-        if(this.getEnvironnement().getNbTours() % this.tempsAtt == 0) {
+        if(this.estTempsEcoule()) {
             this.getEnvironnement().ajouterArgent(this.argentDonne);
         }
     }
 
-    @Override
-    public void ameliorerBatiment() {
-        if (this.getEnvironnement().getArgent() >= this.coutProchaineAmelioration()) {
-            if (this.getNiveau() < this.getNiveauMax()) {
-                this.argentDonne = (int)(this.argentDonne * (1 + this.tauxAmeliorationParNiveau()));
-                this.tempsAtt = (int) (this.tempsAtt * (1 - this.tauxAmeliorationParNiveau()));
-                this.getEnvironnement().retirerArgent(this.coutProchaineAmelioration());
-                this.incrementerNiveau();
-            }
-        }
+    public boolean estTempsEcoule() {
+        return this.getEnvironnement().getNbTours() % this.tempsAtt == 0;
     }
+
+    @Override
+    public void appliquerAmeliorations() {
+        this.argentDonne = (int)(this.argentDonne * (1 + this.tauxAmeliorationParNiveau()));
+        this.tempsAtt = (int) (this.tempsAtt * (1 - this.tauxAmeliorationParNiveau()));
+    }
+
 
     public String avoirDescription() {
         return super.avoirDescription() + "Argent donné : " + this.argentDonne + "\nTemps d'attente : " + this.tempsAtt;

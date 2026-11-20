@@ -9,4 +9,9 @@ import java.util.ArrayList;
  */
 public class ErreurExecution extends Ennemi {
     public ErreurExecution(Environnement env, ArrayList<Point> chemin) {super(100, 2, 1500, env, chemin);}
+
+    @Override
+    public boolean estUnBoss() {
+        return true;
+    }
 }

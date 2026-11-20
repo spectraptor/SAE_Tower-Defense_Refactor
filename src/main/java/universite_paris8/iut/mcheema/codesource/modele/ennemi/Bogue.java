@@ -10,5 +10,4 @@ import java.util.ArrayList;
  */
 public class Bogue extends Ennemi {
     public Bogue(Environnement env, ArrayList<Point> chemin) {super(3, 2, 15, env, chemin);}
-    public Bogue(double x, double y, Environnement env, ArrayList<Point> chemin) {super(3, 2, 15, env, chemin);}
 }
